@@ -18,14 +18,14 @@ export default function LocationSearchResult({ results }: LocationSearchResultPr
     return (
         <div className={'container mt-3'}>
             <hr />
-            <h1 className={'display-6 fs-6'}>Location Results</h1>
+            <h1 className={'display-6 fs-6 text-bg-dark bg-transparent'}>Location Results</h1>
             <div className='list-group mb-4'>
                 {results.map((r) => (
                     <a
                         key={r.place_id}
                         href='#'
                         onClick={() => onClick(r)}
-                        className='list-group-item list-group-item-action mb-2 text-bg-light bg-opacity-10 rounded rounded-pill border-light border-opacity-10 shadow-sm'
+                        className='list-group-item list-group-item-action px-4 fs-6 mb-2 text-bg-dark text-opacity-10 bg-opacity-25 rounded rounded-pill border-light border-opacity-10 shadow-sm'
                     >
                         {r.display_name}
                     </a>

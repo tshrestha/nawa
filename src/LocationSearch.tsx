@@ -3,7 +3,7 @@ import { useActionState, useState } from 'react'
 import LocationSearchForm from './LocationSearchForm.tsx'
 import LocationSearchResult from './LocationSearchResult.tsx'
 
-const geocodingURL = 'https://nominatim.openstreetmap.org/search?format=json'
+const geocodingURL = 'https://nominatim.openstreetmap.org/search?format=json&addressdetails=1'
 
 const getGeocoding = async (previousState: string, location: string) => {
     if (location && location !== previousState) {

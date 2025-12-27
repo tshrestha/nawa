@@ -14,14 +14,15 @@ export default function LocationSearchForm({
             <div className='input-group mb-3'>
                 <input
                     type='text'
-                    className='form-control rounded-pill rounded-end opacity-50 shadow'
+                    name={'search'}
+                    className='form-control rounded-pill rounded-end text-bg-dark bg-opacity-25 border-light border-opacity-10 shadow'
                     placeholder='Location'
                     aria-label='Location'
                     aria-describedby='search'
                     onChange={(e) => onSearchFieldChange(e.target.value)}
                 />
                 <button
-                    className='btn btn-primary rounded-pill rounded-start shadow'
+                    className='btn btn-primary rounded-pill rounded-start border-opacity-10 shadow'
                     type='button'
                     id='search'
                     onClick={() => onSearchButtonClick(location)}
