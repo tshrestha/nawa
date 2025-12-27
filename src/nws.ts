@@ -88,11 +88,11 @@ export async function getLatestObservations(stationID: string) {
 export async function getForecast(forecastURL: string) {
     const response = await fetch(forecastURL)
     if (!response.ok) {
-        console.error('request failed')
+        console.error('failed to get forecast')
         return null
     }
 
     const forecast = (await response.json()) as ForecastResult
-    console.log(forecast)
+    console.log('forecast', forecast)
     return forecast
 }
