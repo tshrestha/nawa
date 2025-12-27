@@ -9,14 +9,14 @@ on:
   pull_request:
     branches: [ "main" ]
 
-jobs:
-  build:
-
-    runs-on: ubuntu-latest
-    permissions:
+permissions:
       id-token: write
       pages: write
       contents: read
+      
+jobs:
+  build:
+    runs-on: ubuntu-latest
 
     strategy:
       matrix:
@@ -41,7 +41,12 @@ jobs:
       uses: actions/upload-pages-artifact@v3
       with:
         path: './dist'
-
+  
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+    steps:
     - name: Deploy to GitHub Pages
       id: deployment
       uses: actions/deploy-pages@v4
