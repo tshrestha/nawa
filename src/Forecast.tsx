@@ -53,7 +53,10 @@ export default function Forecast() {
                 {forecastResult?.properties.periods.map((p: Record<string, string>, index: number) => (
                     <div className={'col-5'} key={index}>
                         <div className='card mx-2 bg-transparent text-bg-dark bg-opacity-25'>
-                            <div className='card-header text-center text-bg-dark bg-opacity-25' style={{ height: '66px' }}>
+                            <div
+                                className='card-header text-center text-bg-dark bg-opacity-25'
+                                style={{ height: '66px' }}
+                            >
                                 <small>{p.name}</small>
                             </div>
                             <img src={clearday} alt='clear day' className='card-img-top img-fluid w-75 mx-auto' />

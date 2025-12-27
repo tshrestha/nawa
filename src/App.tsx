@@ -18,7 +18,7 @@ function App() {
             <ForecastLocationContext value={forecastContextValue}>
                 <Routes>
                     <Route path={'/'} element={<Home />}></Route>
-                    <Route path={'/forecast/:point'} element={<Forecast forecastLocation={forecastLocation} />} />
+                    <Route path={'/forecast/:point'} element={<Forecast />} />
                 </Routes>
             </ForecastLocationContext>
         </BrowserRouter>
