@@ -1,5 +1,6 @@
 {
     "name": "nawa",
+    "homepage": "https://tshrestha.github.io/nawa",
     "private": true,
     "version": "0.0.0",
     "type": "module",

@@ -14,7 +14,7 @@ function App() {
     }
 
     return (
-        <BrowserRouter>
+        <BrowserRouter basename={'/nawa'}>
             <ForecastLocationContext value={forecastContextValue}>
                 <Routes>
                     <Route path={'/'} element={<Home />}></Route>

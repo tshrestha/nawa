@@ -29,7 +29,9 @@ export default function LatestObservations() {
             <div className={'container mt-3 text-center'}>
                 <h1 className={'display-6'}>Denver</h1>
                 <h1 className={'display-1'}>{toF(latestObservations?.properties.temperature.value)}º F</h1>
-                <span className={'badge fs-6 text-bg-secondary shadow-sm'}>{latestObservations?.properties.textDescription}</span>
+                <span className={'badge fs-6 text-bg-secondary shadow-sm'}>
+                    {latestObservations?.properties.textDescription}
+                </span>
             </div>
         )
     )

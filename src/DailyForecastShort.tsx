@@ -1,3 +1,1 @@
-export default function DailyForecastShort() {
-
-}
+export default function DailyForecastShort() {}
