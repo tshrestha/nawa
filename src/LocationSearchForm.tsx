@@ -22,8 +22,12 @@ export default function LocationSearchForm({
         }
 
         Autocomplete.init('#geocodingSearch', {
-            items
+            items,
+            onSelectItem(item) {
+                onSearchFieldChange(item.label)
+            }
         })
+        console.log('autocomplete initialized')
     }, [])
 
     const onSearch = (q: string) => {
