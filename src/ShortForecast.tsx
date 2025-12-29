@@ -24,7 +24,7 @@ export default function ShortForecast({ forecastResult }: { forecastResult?: For
                 {forecastResult?.properties.periods.map((p: Record<string, string>, i: number) => (
                     <div className={'col-5'} key={i}>
                         <div className={`card  bg-transparent text-bg-dark border-0`}>
-                            <div className={'card-header text-center border-0 bg-transparent'}>
+                            <div className={'card-header text-center border-0 bg-transparent pb-0'}>
                                 <small>{p.name}</small>
                             </div>
                             <img
@@ -32,7 +32,7 @@ export default function ShortForecast({ forecastResult }: { forecastResult?: For
                                 alt='clear day'
                                 className='card-img-top img-fluid w-75 mx-auto'
                             />
-                            <div className='card-body text-center'>
+                            <div className='card-body text-center pt-0'>
                                 <p className='card-text'>
                                     <small>{p.shortForecast}</small>
                                 </p>

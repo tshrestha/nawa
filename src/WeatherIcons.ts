@@ -8,6 +8,8 @@ import OvercastDay from './assets/weather-icons-master/production/fill/all/overc
 import OvercastNight from './assets/weather-icons-master/production/fill/all/overcast-night.svg'
 import Drizzle from './assets/weather-icons-master/production/fill/all/drizzle.svg'
 import Rain from './assets/weather-icons-master/production/fill/all/rain.svg'
+import PartlyCloudyDayRain from './assets/weather-icons-master/production/fill/all/partly-cloudy-day-rain.svg'
+import PartlyCloudyNightRain from './assets/weather-icons-master/production/fill/all/partly-cloudy-night-rain.svg'
 import Sleet from './assets/weather-icons-master/production/fill/all/sleet.svg'
 import PartlyCloudyDay from './assets/weather-icons-master/production/fill/all/partly-cloudy-day.svg'
 import PartlyCloudyNight from './assets/weather-icons-master/production/fill/all/partly-cloudy-night.svg'
@@ -93,6 +95,20 @@ export const icons = [
         icon: Rain
     },
     {
+        path: './assets/weather-icons-master/production/fill/all/partly-cloudy-day-rain.svg',
+        keywords: ['light rain'],
+        day: true,
+        night: false,
+        icon: PartlyCloudyDayRain
+    },
+    {
+        path: './assets/weather-icons-master/production/fill/all/partly-cloudy-night-rain.svg',
+        keywords: ['light rain'],
+        day: false,
+        night: true,
+        icon: PartlyCloudyNightRain
+    },
+    {
         path: './assets/weather-icons-master/production/fill/all/sleet.svg',
         keywords: ['sleet', 'freezing rain'],
         day: true,
@@ -101,7 +117,7 @@ export const icons = [
     },
     {
         path: './assets/weather-icons-master/production/fill/all/partly-cloudy-day.svg',
-        keywords: ['partly cloudy', 'mostly cloudy'],
+        keywords: ['partly cloudy', 'mostly cloudy', 'partly sunny'],
         day: true,
         night: false,
         icon: PartlyCloudyDay
@@ -143,21 +159,21 @@ export const icons = [
     },
     {
         path: './assets/weather-icons-master/production/fill/all/thunderstorms-day-rain.svg',
-        keywords: ['thunder', 'thunderstorms', 'thunder storms', 'rain'],
+        keywords: ['thunder', 'thunderstorms', 'thunder storms'],
         day: true,
         nigh: false,
         icon: ThunderstormsDayRain
     },
     {
         path: './assets/weather-icons-master/production/fill/all/thunderstorms-night-rain.svg',
-        keywords: ['thunder', 'thunderstorms', 'thunder storms', 'rain'],
+        keywords: ['thunder', 'thunderstorms', 'thunder storms'],
         day: false,
         night: true,
         icon: ThunderstormsNightRain
     },
     {
         path: './assets/weather-icons-master/production/fill/all/thunderstorms-snow.svg',
-        keywords: ['thunder', 'thunderstorms', 'thunder storms', 'snow'],
+        keywords: ['thunder snow'],
         day: true,
         night: true,
         icon: ThunderstormsSnow
@@ -192,14 +208,14 @@ export const icons = [
     },
     {
         path: './assets/weather-icons-master/production/fill/all/partly-cloudy-day-snow.svg',
-        keywords: ['snow', 'chance snow', 'slight chance snow'],
+        keywords: ['light snow'],
         day: true,
         night: false,
         icon: PartlyCloudyDaySnow
     },
     {
         path: './assets/weather-icons-master/production/fill/all/partly-cloudy-night-snow.svg',
-        keywords: ['snow', 'chance snow', 'slight chance snow'],
+        keywords: ['light snow'],
         day: false,
         night: true,
         icon: PartlyCloudyNightSnow
@@ -214,19 +230,32 @@ const fuse = new Fuse(
     icons,
     {
         isCaseSensitive: false,
-        keys: ['keywords']
+        keys: ['keywords'],
+        includeScore: true,
+        shouldSort: true
     },
     iconIndex
 )
 
 export function getIcon({ keyword, isDay, isNight }: Record<string, string | boolean>) {
     console.log(keyword, `isNight: ${isNight}`, `isDay: ${isDay}`)
-    const searchResults: FuseResult<Icon>[] = fuse.search(keyword as string)
+    const tokens = (keyword as string).split(' ')
 
-    const matchedIcons: Icon[] = searchResults.map((s) => s.item)
+    let searchTerm
+    if (tokens.length > 1) {
+        searchTerm = tokens.slice(-2).join(' ')
+    } else {
+        searchTerm = tokens.pop()
+    }
+
+    console.log('searchTerm', searchTerm)
+    const searchResults: FuseResult<Icon>[] = fuse.search(searchTerm as string)
+    console.log('Fuse Results', searchResults)
+
+    const matchedIcons: Icon[] = searchResults.filter((s) => s.score! < 1).map((s) => s.item)
     console.log(`matchedIcons`, matchedIcons)
 
-    const filteredIcons = matchedIcons.filter((i) => i.day === isDay && i.night === isNight)
+    const filteredIcons = matchedIcons.filter((i) => i && i.day === isDay && i.night === isNight)
     console.log(`filteredIcons`, filteredIcons)
 
     return filteredIcons.length ? filteredIcons[0].icon : ClearDay
