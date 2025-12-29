@@ -6,3 +6,7 @@ html {
     height: 100svh;
     height: 100dvh;
 }
+
+.dropdown-menu.autocomplete-menu {
+    top: 38px;
+}

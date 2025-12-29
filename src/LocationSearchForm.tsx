@@ -1,3 +1,6 @@
+import { useEffect } from 'react'
+import Autocomplete from 'bootstrap5-autocomplete'
+
 export interface LocationSearchFormProps {
     location: string
     onSearchFieldChange: (value: string) => void
@@ -9,13 +12,43 @@ export default function LocationSearchForm({
     onSearchFieldChange,
     onSearchButtonClick
 }: LocationSearchFormProps) {
+    useEffect(() => {
+        const savedQueries = localStorage.getItem('savedQueries')
+        let items
+        if (savedQueries) {
+            items = JSON.parse(savedQueries)
+        } else {
+            items = []
+        }
+
+        Autocomplete.init('#geocodingSearch', {
+            items
+        })
+    }, [])
+
+    const onSearch = (q: string) => {
+        const savedQueries = localStorage.getItem('savedQueries')
+
+        let queries
+        if (savedQueries) {
+            queries = JSON.parse(savedQueries)
+        } else {
+            queries = []
+        }
+
+        queries.push({ label: q, value: q })
+        localStorage.setItem('savedQueries', JSON.stringify(queries))
+        onSearchButtonClick(q)
+    }
+
     return (
         <div className={'container mt-3 bg-transparent'}>
             <div className='input-group mb-3'>
                 <input
+                    id={'geocodingSearch'}
                     type='text'
                     name={'search'}
-                    className='form-control rounded-pill rounded-end text-bg-dark bg-opacity-25 border-light border-opacity-10 shadow'
+                    className='form-control autocomplete rounded-pill rounded-end text-bg-dark bg-opacity-25 border-light border-opacity-10 shadow'
                     placeholder='Search for a city or place'
                     aria-label='Location'
                     aria-describedby='search'
@@ -24,7 +57,7 @@ export default function LocationSearchForm({
                     // @ts-ignore
                     onKeyDown={(e: KeyboardEvent) => {
                         if (e.key === 'Enter') {
-                            onSearchButtonClick(location)
+                            onSearch(location)
                         }
                     }}
                 />
@@ -33,7 +66,7 @@ export default function LocationSearchForm({
                     type='button'
                     id='search'
                     style={{ borderLeft: 'none' }}
-                    onClick={() => onSearchButtonClick(location)}
+                    onClick={() => onSearch(location)}
                 >
                     <i className={'bi bi-search'} />
                 </button>
