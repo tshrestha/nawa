@@ -2,26 +2,22 @@ import { useActionState, useState } from 'react'
 
 import LocationSearchForm from './LocationSearchForm.tsx'
 import LocationSearchResult from './LocationSearchResult.tsx'
-import { search } from './geocoding.ts'
+import { type GeocodingResult, geocodingSearch } from './geocoding.ts'
 
-const getGeocoding = async (previousState: string, location: string) => {
-    if (location && location !== previousState) {
-        return await search(location)
+const getSearchResults = async (previousState: string, query: string) => {
+    if (query && query !== previousState) {
+        return await geocodingSearch(query)
     }
-    return []
+    return [] as GeocodingResult[]
 }
 
 export default function LocationSearch() {
-    const [location, setLocation] = useState('')
-    const [searchResult, searchAction] = useActionState(getGeocoding, location)
+    const [query, setQuery] = useState('')
+    const [searchResult, searchAction] = useActionState(getSearchResults, null)
 
     return (
         <>
-            <LocationSearchForm
-                location={location}
-                onSearchFieldChange={setLocation}
-                onSearchButtonClick={searchAction}
-            />
+            <LocationSearchForm location={query} onSearchFieldChange={setQuery} onSearchButtonClick={searchAction} />
             {searchResult && <LocationSearchResult results={searchResult} />}
         </>
     )

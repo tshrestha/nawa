@@ -4,9 +4,10 @@ import { BrowserRouter, Route, Routes } from 'react-router'
 import Home from './Home.tsx'
 import Forecast from './Forecast.tsx'
 import { ForecastLocationContext } from './ForecastLocationContext.ts'
+import type { GeocodingResult } from './geocoding.ts'
 
 function App() {
-    const [forecastLocation, setForecastLocation] = useState<Record<string, string>>({})
+    const [forecastLocation, setForecastLocation] = useState<GeocodingResult>({})
 
     const forecastContextValue = {
         forecastLocation,

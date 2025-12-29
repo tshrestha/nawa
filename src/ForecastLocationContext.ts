@@ -1,8 +1,9 @@
 import { createContext, type Dispatch, type SetStateAction } from 'react'
+import type { GeocodingResult } from './geocoding.ts'
 
 export interface ForecastLocationContext {
-    forecastLocation: Record<string, string>
-    setForecastLocation: Dispatch<SetStateAction<Record<string, string>>>
+    forecastLocation: GeocodingResult
+    setForecastLocation: Dispatch<SetStateAction<GeocodingResult>>
 }
 
 export const ForecastLocationContext = createContext<ForecastLocationContext>({

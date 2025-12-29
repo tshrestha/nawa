@@ -22,9 +22,10 @@ export default function LocationSearchForm({
                     onChange={(e) => onSearchFieldChange(e.target.value)}
                 />
                 <button
-                    className='btn btn-primary rounded-pill rounded-start border-opacity-10 shadow'
+                    className='btn btn-primary rounded-pill rounded-start shadow border-light border-opacity-25'
                     type='button'
                     id='search'
+                    style={{ borderLeft: 'none' }}
                     onClick={() => onSearchButtonClick(location)}
                 >
                     <i className={'bi bi-search'} />

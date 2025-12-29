@@ -5,7 +5,7 @@ export type GeocodingResult = Record<
     string | number | string[] | number[] | Record<string, string | number | string[] | number[]>
 >
 
-export async function search(query: string): Promise<GeocodingResult[]> {
+export async function geocodingSearch(query: string) {
     const reqURL = `${baseURL}/search?q=${query}&format=json&addressdetails=1`
     const cached = localStorage.getItem(reqURL)
 
