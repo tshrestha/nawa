@@ -89,8 +89,22 @@ export const icons = [
     },
     {
         path: './assets/weather-icons-master/production/fill/all/rain.svg',
-        keywords: ['rain', 'moderate rain'],
+        keywords: ['rain', 'moderate rain', 'rain showers', 'showers likely'],
         day: true,
+        night: true,
+        icon: Rain
+    },
+    {
+        path: './assets/weather-icons-master/production/fill/all/rain.svg',
+        keywords: ['rain', 'moderate rain', 'rain showers', 'showers likely'],
+        day: true,
+        night: false,
+        icon: Rain
+    },
+    {
+        path: './assets/weather-icons-master/production/fill/all/rain.svg',
+        keywords: ['rain', 'moderate rain', 'rain showers', 'showers likely'],
+        day: false,
         night: true,
         icon: Rain
     },
@@ -201,21 +215,35 @@ export const icons = [
     },
     {
         path: './assets/weather-icons-master/production/fill/all/snow.svg',
-        keywords: ['snow'],
+        keywords: ['snow', 'blowing snow'],
         day: true,
         night: true,
         icon: Snow
     },
     {
+        path: './assets/weather-icons-master/production/fill/all/snow.svg',
+        keywords: ['snow', 'blowing snow'],
+        day: true,
+        night: false,
+        icon: Snow
+    },
+    {
+        path: './assets/weather-icons-master/production/fill/all/snow.svg',
+        keywords: ['snow', 'blowing snow'],
+        day: false,
+        night: true,
+        icon: Snow
+    },
+    {
         path: './assets/weather-icons-master/production/fill/all/partly-cloudy-day-snow.svg',
-        keywords: ['light snow'],
+        keywords: ['light snow', 'snow likely'],
         day: true,
         night: false,
         icon: PartlyCloudyDaySnow
     },
     {
         path: './assets/weather-icons-master/production/fill/all/partly-cloudy-night-snow.svg',
-        keywords: ['light snow'],
+        keywords: ['light snow', 'snow likely'],
         day: false,
         night: true,
         icon: PartlyCloudyNightSnow

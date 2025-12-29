@@ -6,7 +6,7 @@ export type GeocodingResult = Record<
 >
 
 export async function geocodingSearch(query: string) {
-    const reqURL = `${baseURL}/search?q=${query}&format=json&addressdetails=1`
+    const reqURL = `${baseURL}/search?q=${query}&format=json&addressdetails=1&countrycodes=us`
     const cached = localStorage.getItem(reqURL)
 
     if (cached) {
