@@ -1,4 +1,4 @@
-body {
+body, html {
     background: #cc74b5;
     background: linear-gradient(180deg, rgba(204, 116, 181, 1) 0%, rgba(36, 99, 135, 1) 75%);
     height: 100vh;
