@@ -16,7 +16,7 @@ export default function LocationSearchForm({
                     type='text'
                     name={'search'}
                     className='form-control rounded-pill rounded-end text-bg-dark bg-opacity-25 border-light border-opacity-10 shadow'
-                    placeholder='Location'
+                    placeholder='Search for a city or place'
                     aria-label='Location'
                     aria-describedby='search'
                     onChange={(e) => onSearchFieldChange(e.target.value)}
