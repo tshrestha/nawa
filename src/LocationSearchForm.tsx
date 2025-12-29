@@ -20,6 +20,13 @@ export default function LocationSearchForm({
                     aria-label='Location'
                     aria-describedby='search'
                     onChange={(e) => onSearchFieldChange(e.target.value)}
+                    /* eslint-disable-next-line @typescript-eslint/ban-ts-comment */
+                    // @ts-ignore
+                    onKeyDown={(e: KeyboardEvent) => {
+                        if (e.key === 'Enter') {
+                            onSearchButtonClick(location)
+                        }
+                    }}
                 />
                 <button
                     className='btn btn-primary rounded-pill rounded-start shadow border-light border-opacity-25'
