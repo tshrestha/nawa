@@ -1,4 +1,4 @@
-import { useActionState, useState } from 'react'
+import { useActionState } from 'react'
 
 import LocationSearchForm from './LocationSearchForm.tsx'
 import LocationSearchResult from './LocationSearchResult.tsx'
@@ -12,12 +12,11 @@ const getSearchResults = async (previousState: string, query: string) => {
 }
 
 export default function LocationSearch() {
-    const [query, setQuery] = useState('')
     const [searchResult, searchAction] = useActionState(getSearchResults, null)
 
     return (
         <>
-            <LocationSearchForm location={query} onSearchFieldChange={setQuery} onSearchButtonClick={searchAction} />
+            <LocationSearchForm onSearchButtonClick={searchAction} />
             {searchResult && <LocationSearchResult results={searchResult} />}
         </>
     )

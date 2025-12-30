@@ -15,7 +15,7 @@ export default function LocationSearchResult({ results }: LocationSearchResultPr
                     <Link
                         to={`/forecast/${r.lat},${r.lon}`}
                         key={r.place_id as string}
-                        className='list-group-item list-group-item-action px-4 fs-6 mb-2 text-bg-dark text-opacity-10 bg-opacity-25 rounded rounded-pill border-light border-opacity-10 shadow-sm'
+                        className='list-group-item list-group-item-action link-light link-opacity-75-hover px-4 fs-6 mb-2 text-bg-dark text-opacity-10 bg-opacity-25 rounded rounded-pill border-light border-opacity-10 shadow-sm'
                     >
                         {r.display_name as string}
                     </Link>
