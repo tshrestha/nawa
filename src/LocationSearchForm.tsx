@@ -127,6 +127,7 @@ export default function LocationSearchForm() {
                         className={`list-group-item list-group-item-action text-bg-dark bg-opacity-75 border-dark border-opacity-50 search-result ${i === resultNav.selectionOffset ? 'active' : ''}`}
                         to={`/forecast/${feature.properties?.coordinates.latitude},${feature.properties?.coordinates.longitude}`}
                         onClick={() => saveSelection(feature)}
+                        tabIndex={0}
                     >
                         {feature.properties?.full_address}
                     </Link>
