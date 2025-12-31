@@ -74,7 +74,9 @@ export async function getClosestStation(stationsURL: string) {
 }
 
 export async function getLatestObservations(stationID: string) {
-    const response = await fetch(`${weatherURL}/stations/${stationID}/observations/latest`)
+    const response = await fetch(`${weatherURL}/stations/${stationID}/observations/latest`, {
+        cache: 'no-store'
+    })
     if (!response.ok) {
         console.error('failed to get latest observations')
         return null

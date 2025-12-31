@@ -1,44 +1,64 @@
-import { useRef, useState } from 'react'
+import React, { useRef, useState } from 'react'
 import { Link, useNavigate } from 'react-router'
 import { debounce } from 'lodash-es'
 
-import { geocodeSearch } from './geocoding.ts'
 import type { Feature } from 'geojson'
+import { geocodeSearch } from './geocoding.ts'
+import { addItem, getItem, setItem } from './cache.ts'
 
-export interface LocationSearchFormProps {
-    location?: string
-    onSearchFieldChange?: (value: string) => void
-    onSearchButtonClick?: (location: string) => void
-}
+const savedSelectionsCollectionKey = 'nawaSavedSelections'
 
 export default function LocationSearchForm() {
     const navigate = useNavigate()
     const searchInputRef = useRef(null)
-    const [searchResult, setSearchResults] = useState<Feature[]>()
+    const [searchResults, setSearchResults] = useState<Feature[]>()
+    const [searchResultsVisible, setSearchResultsVisible] = useState(false)
 
     const [resultNav, setResultNav] = useState({
-        maxOffset: searchResult ? searchResult.length - 1 : 0,
+        maxOffset: searchResults ? searchResults.length - 1 : 0,
         selectionOffset: 0
     })
+
+    const saveSelection = (selection: any) => {
+        addItem(savedSelectionsCollectionKey, selection)
+        console.log('saved selection', selection)
+    }
+
+    const loadSavedSelections = () => {
+        const savedSelections = getItem(savedSelectionsCollectionKey)
+        if (savedSelections) {
+            setSearchResults(savedSelections)
+        }
+    }
+
+    const onFocus = () => {
+        loadSavedSelections()
+        setSearchResultsVisible(true)
+    }
+
+    const onBlur = (e: React.FocusEvent) => {
+        if (!(e.relatedTarget as HTMLElement)?.classList.contains('search-result')) {
+            setSearchResultsVisible(false)
+        }
+    }
 
     const onChange = () => {
         if (searchInputRef.current) {
             const query = (searchInputRef.current as HTMLInputElement).value
             if (query && query.length > 2) {
-                const serializedCache = sessionStorage.getItem(query)
-                if (serializedCache) {
-                    const cached = JSON.parse(serializedCache)
+                const cached = getItem(query)
+                if (cached) {
                     console.log('retrieved cached search results', cached)
                     setSearchResults(cached)
                     setResultNav({ ...resultNav, maxOffset: cached.length - 1 })
                 } else {
                     debounce(() => {
                         geocodeSearch(query).then(({ features }) => {
-                            sessionStorage.setItem(query, JSON.stringify(features))
+                            setItem(query, features)
                             setSearchResults(features)
                             setResultNav({ ...resultNav, maxOffset: features!.length - 1 })
                         })
-                    }, 1000)()
+                    }, 300)()
                 }
             } else {
                 setSearchResults([])
@@ -47,15 +67,16 @@ export default function LocationSearchForm() {
         }
     }
 
-    const onKeyDown = (e: KeyboardEvent) => {
-        if (searchResult && searchResult.length) {
+    const onKeyDown = (e: React.KeyboardEvent) => {
+        if (searchResults && searchResults.length) {
             if (e.key === 'Enter') {
                 const {
                     properties: {
                         // @ts-ignore
                         coordinates: { latitude, longitude }
                     }
-                } = searchResult[resultNav.selectionOffset]
+                } = searchResults[resultNav.selectionOffset]
+                saveSelection(searchResults[resultNav.selectionOffset])
                 navigate(`/forecast/${latitude},${longitude}`)
             } else if (e.key === 'ArrowDown') {
                 setResultNav({
@@ -91,21 +112,22 @@ export default function LocationSearchForm() {
                     aria-label='Location'
                     aria-describedby='search'
                     onChange={onChange}
-                    /* eslint-disable-next-line @typescript-eslint/ban-ts-comment */
-                    // @ts-ignore
                     onKeyDown={onKeyDown}
+                    onFocus={onFocus}
+                    onBlur={onBlur}
                 />
             </div>
             <div
                 id='suggestions'
-                className={`list-group list-group-flush rounded rounded-3 position-absolute shadow w-75 ${searchResult?.length ? '' : 'd-none'}`}
+                className={`list-group list-group-flush rounded rounded-3 position-absolute shadow w-75 ${searchResults?.length && searchResultsVisible ? '' : 'd-none'}`}
                 style={{ zIndex: 1000 }}
             >
-                {searchResult?.map((feature, i) => (
+                {searchResults?.map((feature, i) => (
                     <Link
                         key={feature.id}
                         className={`list-group-item list-group-item-action text-bg-dark bg-opacity-75 border-dark border-opacity-50 search-result ${i === resultNav.selectionOffset ? 'active' : ''}`}
                         to={`/forecast/${feature.properties?.coordinates.latitude},${feature.properties?.coordinates.longitude}`}
+                        onClick={() => saveSelection(feature)}
                     >
                         {feature.properties?.full_address}
                     </Link>

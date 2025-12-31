@@ -22,7 +22,7 @@ export default function ShortForecast({ forecastResult }: { forecastResult?: For
         forecastResult && (
             <div className={'mt-3 d-flex flex-row flex-nowrap overflow-auto'}>
                 {forecastResult?.properties.periods.map((p: Record<string, string>, i: number) => (
-                    <div className={'col-5'} key={i}>
+                    <div className={'col-3'} key={i}>
                         <div className={`card  bg-transparent text-bg-dark border-0`}>
                             <div className={'card-header text-center border-0 bg-transparent pb-0'}>
                                 <small>{p.name}</small>
@@ -30,7 +30,7 @@ export default function ShortForecast({ forecastResult }: { forecastResult?: For
                             <img
                                 src={getIcon({ keyword: p.shortForecast, ...getTimeOfDay(p.name) })}
                                 alt='clear day'
-                                className='card-img-top img-fluid w-75 mx-auto'
+                                className='card-img-top img-fluid w-50 mx-auto'
                             />
                             <div className='card-body text-center pt-0'>
                                 <p className='card-text'>
