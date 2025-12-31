@@ -1,22 +1,12 @@
 import { useEffect, useState } from 'react'
 import { Link, useLocation } from 'react-router'
 
+import { type GeocodingResult, reverse } from './lib/geocoding.ts'
 import { type ForecastResult, type Point, getForecast, getPoint } from './lib/nws.ts'
 import LatestObservations from './LatestObservations.tsx'
-import { type GeocodingResult, reverse } from './lib/geocoding.ts'
 import ShortForecast from './ShortForecast.tsx'
 import DetailedForecast from './DetailedForecaset.tsx'
-
-function getLatLon(path: string) {
-    const segments = path.split('/')
-    console.log(segments)
-
-    const point = segments.pop() as string
-    console.log(point)
-
-    const [lat, lon] = point.split(',')
-    return { lat, lon }
-}
+import { getLatLon } from './lib/util.ts'
 
 export interface ForecastProps {
     point?: {

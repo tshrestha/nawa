@@ -1,5 +1,7 @@
 import { uniqBy } from 'lodash-es'
 
+export const savedSelectionsCollectionKey = 'nawaSavedSelections'
+
 export function getItem(key: string) {
     const serializedItem = localStorage.getItem(key)
     if (serializedItem) {

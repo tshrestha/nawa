@@ -4,9 +4,7 @@ import { debounce } from 'lodash-es'
 
 import type { Feature } from 'geojson'
 import { geocodeSearch } from './lib/geocoding.ts'
-import { addItem, getItem, setItem } from './lib/cache.ts'
-
-const savedSelectionsCollectionKey = 'nawaSavedSelections'
+import { addItem, getItem, setItem, savedSelectionsCollectionKey } from './lib/cache.ts'
 
 export default function LocationSearchForm() {
     const navigate = useNavigate()

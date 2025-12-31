@@ -1,21 +1,6 @@
 import { getIcon } from './lib/wicons.ts'
+import { getTimeOfDay } from './lib/util.ts'
 import type { ForecastResult } from './lib/nws.ts'
-
-function getTimeOfDay(phrase: string) {
-    const nightPattern = /[Nn]ight/
-    const dayPattern = /([Dd]ay)|[Aa]fternoon/
-    const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
-
-    if (nightPattern.test(phrase)) {
-        return { isDay: false, isNight: true }
-    }
-
-    if (days.includes(phrase) || dayPattern.test(phrase)) {
-        return { isDay: true, isNight: false }
-    }
-
-    return { isNight: true, isDay: true }
-}
 
 export default function ShortForecast({ forecastResult }: { forecastResult?: ForecastResult }) {
     return (
