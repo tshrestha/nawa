@@ -19,7 +19,6 @@ export default function LocationSearchForm() {
 
     const saveSelection = (selection: any) => {
         addItem(savedSelectionsCollectionKey, selection)
-        console.log('saved selection', selection)
     }
 
     const loadSavedSelections = () => {
@@ -46,7 +45,6 @@ export default function LocationSearchForm() {
             if (query && query.length > 2) {
                 const cached = getItem(query)
                 if (cached) {
-                    console.log('retrieved cached search results', cached)
                     setSearchResults(cached)
                     setResultNav({ ...resultNav, maxOffset: cached.length - 1 })
                 } else {

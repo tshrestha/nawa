@@ -17,7 +17,6 @@ export interface ForecastProps {
 
 export default function Forecast({ point }: ForecastProps) {
     const location = useLocation()
-    console.log(location.pathname)
     let lat, lon
 
     if (point) {

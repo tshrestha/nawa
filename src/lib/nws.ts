@@ -55,10 +55,7 @@ export async function getPoint(lat: string, lon: string) {
         return null
     }
 
-    const point = await response.json()
-    console.log(point)
-
-    return point
+    return await response.json()
 }
 
 export async function getClosestStation(stationsURL: string) {
@@ -69,7 +66,6 @@ export async function getClosestStation(stationsURL: string) {
     }
 
     const stations = (await response.json()) as StationsResult
-    console.log(stations.features[0])
     return stations.features[0]
 }
 
@@ -82,9 +78,7 @@ export async function getLatestObservations(stationID: string) {
         return null
     }
 
-    const latestObservations = await response.json()
-    console.log(latestObservations)
-    return latestObservations
+    return await response.json()
 }
 
 export async function getForecast(forecastURL: string) {
@@ -94,7 +88,5 @@ export async function getForecast(forecastURL: string) {
         return null
     }
 
-    const forecast = (await response.json()) as ForecastResult
-    console.log('forecast', forecast)
-    return forecast
+    return (await response.json()) as ForecastResult
 }

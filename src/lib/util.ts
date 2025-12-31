@@ -16,11 +16,7 @@ export function getTimeOfDay(phrase: string) {
 
 export function getLatLon(path: string) {
     const segments = path.split('/')
-    console.log(segments)
-
     const point = segments.pop() as string
-    console.log(point)
-
     const [lat, lon] = point.split(',')
     return { lat, lon }
 }
