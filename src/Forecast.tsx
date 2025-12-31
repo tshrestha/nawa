@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react'
 import { Link, useLocation } from 'react-router'
 
-import { type ForecastResult, type Point, getForecast, getPoint } from './nws.ts'
+import { type ForecastResult, type Point, getForecast, getPoint } from './lib/nws.ts'
 import LatestObservations from './LatestObservations.tsx'
-import { type GeocodingResult, reverse } from './geocoding.ts'
+import { type GeocodingResult, reverse } from './lib/geocoding.ts'
 import ShortForecast from './ShortForecast.tsx'
 import DetailedForecast from './DetailedForecaset.tsx'
 

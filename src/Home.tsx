@@ -1,4 +1,4 @@
-import { denver } from './nws.ts'
+import { denver } from './lib/nws.ts'
 import Forecast from './Forecast.tsx'
 import LocationSearchForm from './LocationSearchForm.tsx'
 

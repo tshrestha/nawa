@@ -1,5 +1,5 @@
-import { getIcon } from './WeatherIcons.ts'
-import type { ForecastResult } from './nws.ts'
+import { getIcon } from './lib/wicons.ts'
+import type { ForecastResult } from './lib/nws.ts'
 
 function getTimeOfDay(phrase: string) {
     const nightPattern = /[Nn]ight/

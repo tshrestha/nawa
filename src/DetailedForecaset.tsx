@@ -1,4 +1,4 @@
-import type { ForecastResult } from './nws.ts'
+import type { ForecastResult } from './lib/nws.ts'
 
 export default function DetailedForecast({ forecastResult }: { forecastResult?: ForecastResult }) {
     return (

@@ -3,8 +3,8 @@ import { Link, useNavigate } from 'react-router'
 import { debounce } from 'lodash-es'
 
 import type { Feature } from 'geojson'
-import { geocodeSearch } from './geocoding.ts'
-import { addItem, getItem, setItem } from './cache.ts'
+import { geocodeSearch } from './lib/geocoding.ts'
+import { addItem, getItem, setItem } from './lib/cache.ts'
 
 const savedSelectionsCollectionKey = 'nawaSavedSelections'
 

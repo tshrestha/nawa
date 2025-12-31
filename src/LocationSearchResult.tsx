@@ -1,5 +1,5 @@
 import { Link } from 'react-router'
-import type { GeocodingResult } from './geocoding.ts'
+import type { GeocodingResult } from './lib/geocoding.ts'
 
 export interface LocationSearchResultProps {
     results: GeocodingResult[]

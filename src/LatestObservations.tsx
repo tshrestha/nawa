@@ -8,7 +8,7 @@ import {
     type Point,
     type Station,
     toF
-} from './nws.ts'
+} from './lib/nws.ts'
 
 export interface LatestObservationsProps {
     point: {
