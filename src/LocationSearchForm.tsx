@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { Link, useNavigate } from 'react-router'
 import { debounce } from 'lodash-es'
 
@@ -46,19 +46,16 @@ export default function LocationSearchForm() {
                 const cached = getItem(query)
                 if (cached) {
                     setSearchResults(cached)
-                    setResultNav({ ...resultNav, maxOffset: cached.length - 1 })
                 } else {
                     debounce(() => {
                         geocodeSearch(query).then(({ features }) => {
                             setItem(query, features)
                             setSearchResults(features)
-                            setResultNav({ ...resultNav, maxOffset: features!.length - 1 })
                         })
                     }, 300)()
                 }
             } else {
                 setSearchResults([])
-                setResultNav({ selectionOffset: 0, maxOffset: 0 })
             }
         }
     }
@@ -93,6 +90,12 @@ export default function LocationSearchForm() {
             }
         }
     }
+
+    useEffect(() => {
+        if (searchResults && searchResults.length) {
+            setResultNav({ ...resultNav, maxOffset: searchResults.length - 1 })
+        }
+    }, [searchResults])
 
     return (
         <div className={'container mt-3 bg-transparent'}>
