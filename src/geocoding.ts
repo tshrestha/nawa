@@ -1,8 +1,7 @@
 import type { FeatureCollection } from 'geojson'
 
 const baseURL = 'https://nominatim.openstreetmap.org'
-
-const geocodingURL = 'http://localhost:9999/.netlify/functions/geocoding/forward'
+const geocodingURL = `${import.meta.env.VITE_GEOCODE_URL}/.netlify/functions/geocoding/forward`
 
 export type GeocodingResult = Record<
     string,
@@ -13,7 +12,7 @@ export async function geocodeSearch(query: string): Promise<Partial<FeatureColle
     const response = await fetch(`${geocodingURL}?q=${query}`, {
         method: 'GET',
         headers: {
-            'X-Nawa-Token': import.meta.env.NAWA_TOKEN
+            'X-Nawa-Token': import.meta.env.VITE_NAWA_TOKEN
         }
     })
     if (!response.ok) {

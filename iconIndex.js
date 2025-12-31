@@ -144,19 +144,19 @@ export const icons = [
     },
     {
         path: './assets/weather-icons-master/production/fill/all/snow.svg',
-        keywords: ['snow', 'blowing snow'],
+        keywords: ['snow', 'blowing snow', 'snow showers'],
         day: true,
         night: true
     },
     {
         path: './assets/weather-icons-master/production/fill/all/snow.svg',
-        keywords: ['snow', 'blowing snow'],
+        keywords: ['snow', 'blowing snow', 'snow showers'],
         day: true,
         night: false
     },
     {
         path: './assets/weather-icons-master/production/fill/all/snow.svg',
-        keywords: ['snow', 'blowing snow'],
+        keywords: ['snow', 'blowing snow', 'snow showers'],
         day: false,
         night: true
     },
