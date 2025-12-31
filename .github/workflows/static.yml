@@ -37,6 +37,8 @@ jobs:
 
             - name: Build React app
               run: npm run build
+              env:
+                  VITE_NAWA_TOKEN: ${{ secrets.NAWATOKEN }}
 
             - name: Upload build artifacts
               uses: actions/upload-pages-artifact@v3
