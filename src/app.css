@@ -1,5 +1,17 @@
-body {
+.morning {
     background-color: #f4c2c2;
+}
+
+.day {
+    background-color: #87CEEB;
+}
+
+.evening {
+    background-color: #FF8C42;
+}
+
+.night {
+    background-color: #1A2238;
 }
 
 a.search-result.active,

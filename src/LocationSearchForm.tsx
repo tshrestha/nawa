@@ -122,7 +122,7 @@ export default function LocationSearchForm() {
                 id={'geocodingSearch'}
                 type='search'
                 name={'search'}
-                className='form-control form-control-lg rounded-pill border-4 shadow-lg'
+                className='form-control form-control-lg rounded-pill border-4 shadow-sm'
                 placeholder='Search for a city or place'
                 aria-label='Location'
                 aria-describedby='search'
