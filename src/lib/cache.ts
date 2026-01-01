@@ -24,7 +24,7 @@ export function addItem(collectionKey: string, item: any) {
         collection = JSON.parse(serializedCollection)
     }
 
-    collection.unshift(item)
+    collection.push(item)
     collection = uniqBy(collection, 'id')
     localStorage.setItem(collectionKey, JSON.stringify(collection))
 }
