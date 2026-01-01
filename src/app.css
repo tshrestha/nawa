@@ -1,9 +1,12 @@
 body {
-    background-color: #246387ff !important;
-    background: linear-gradient(180deg, rgba(204, 116, 181, 1) 0%, rgba(36, 99, 135, 1) 75%);
+    background-color: #f4c2c2;
 }
 
 a.search-result.active,
 a.search-result:hover {
     background-color: var(--bs-list-group-active-bg) !important;
+}
+
+.form-control.text-bg-dark::placeholder {
+    color: var(--bs-dark-text-emphasis);
 }

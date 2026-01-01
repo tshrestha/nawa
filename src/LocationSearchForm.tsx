@@ -98,33 +98,16 @@ export default function LocationSearchForm() {
     }, [searchResults])
 
     return (
-        <div className={'container mt-3 bg-transparent'}>
-            <div className='input-group'>
-                <input
-                    autoComplete={'off'}
-                    ref={searchInputRef}
-                    id={'geocodingSearch'}
-                    type='search'
-                    name={'search'}
-                    className='form-control rounded-pill text-bg-dark bg-opacity-25 border-light border-opacity-10 shadow'
-                    placeholder='Search for a city or place'
-                    aria-label='Location'
-                    aria-describedby='search'
-                    onChange={onChange}
-                    onKeyDown={onKeyDown}
-                    onFocus={onFocus}
-                    onBlur={onBlur}
-                />
-            </div>
+        <div className={'container position-fixed bottom-0 start-0 pb-3 z-3'}>
             <div
                 id='suggestions'
-                className={`list-group list-group-flush rounded rounded-3 position-absolute shadow w-75 ${searchResults?.length && searchResultsVisible ? '' : 'd-none'}`}
+                className={`list-group list-group-flush rounded rounded-3 position-absolute start-0 bottom-100 pb-1 w-100 ${searchResults?.length && searchResultsVisible ? '' : 'd-none'}`}
                 style={{ zIndex: 1000 }}
             >
                 {searchResults?.map((feature, i) => (
                     <Link
                         key={feature.id}
-                        className={`list-group-item list-group-item-action text-bg-dark bg-opacity-75 border-dark border-opacity-50 search-result ${i === resultNav.selectionOffset ? 'active' : ''}`}
+                        className={`list-group-item list-group-item-action search-result ${i === resultNav.selectionOffset ? 'active' : ''}`}
                         to={`/forecast/${feature.properties?.coordinates.latitude},${feature.properties?.coordinates.longitude}`}
                         onClick={() => saveSelection(feature)}
                         tabIndex={0}
@@ -133,6 +116,21 @@ export default function LocationSearchForm() {
                     </Link>
                 ))}
             </div>
+            <input
+                autoComplete={'off'}
+                ref={searchInputRef}
+                id={'geocodingSearch'}
+                type='search'
+                name={'search'}
+                className='form-control form-control-lg rounded-pill border-4 shadow-lg'
+                placeholder='Search for a city or place'
+                aria-label='Location'
+                aria-describedby='search'
+                onChange={onChange}
+                onKeyDown={onKeyDown}
+                onFocus={onFocus}
+                onBlur={onBlur}
+            />
         </div>
     )
 }

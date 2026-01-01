@@ -42,7 +42,7 @@ export default function Forecast({ point }: ForecastProps) {
     }, [])
 
     return (
-        <div className={'container mt-3'}>
+        <>
             {location.pathname !== '/' && (
                 <Link to={'/'}>
                     <button className={'btn btn-outline-dark'}>
@@ -57,8 +57,12 @@ export default function Forecast({ point }: ForecastProps) {
                     (forecastLocation?.address as Record<string, string>)?.village
                 }
             />
-            <ShortForecast forecastResult={forecastResult} />
-            <DetailedForecast forecastResult={forecastResult} />
-        </div>
+            {forecastResult && (
+                <>
+                    <ShortForecast forecastResult={forecastResult} />
+                    <DetailedForecast forecastResult={forecastResult} />
+                </>
+            )}
+        </>
     )
 }

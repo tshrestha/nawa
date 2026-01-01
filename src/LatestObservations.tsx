@@ -33,9 +33,9 @@ export default function LatestObservations({ point, name }: LatestObservationsPr
 
     return (
         latestObservations && (
-            <div className={'container mt-3 text-center'}>
-                <h1 className={'display-6 text-light'}>{name}</h1>
-                <h1 className={'display-1 text-light'}>{toF(latestObservations?.properties.temperature.value)}º F</h1>
+            <div className={'mt-4 mb-4 text-center'}>
+                <h1 className={'display-6'}>{name}</h1>
+                <h1 className={'display-1'}>{toF(latestObservations?.properties.temperature.value)}º F</h1>
                 <span className={'badge fs-6 text-bg-secondary p-2 fw-light shadow-sm'}>
                     {latestObservations?.properties.textDescription}
                 </span>
