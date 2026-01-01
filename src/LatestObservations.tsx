@@ -37,7 +37,7 @@ export default function LatestObservations({ point, name }: LatestObservationsPr
             <div className={'mt-4 mb-4 text-center'}>
                 <h1 className={'display-6'}>{name}</h1>
                 <div className={'d-flex justify-content-center align-items-center'}>
-                    <div className="col text-end">
+                    <div className='col text-end'>
                         <img
                             src={getIcon({
                                 keyword: latestObservations.properties.textDescription,
@@ -47,8 +47,10 @@ export default function LatestObservations({ point, name }: LatestObservationsPr
                             className={'img-fluid w-50'}
                         />
                     </div>
-                    <div className="col text-start">
-                        <h1 className={'display-1 align-middle'}>{toF(latestObservations.properties.temperature.value)}º F</h1>
+                    <div className='col text-start'>
+                        <h1 className={'display-1 align-middle'}>
+                            {toF(latestObservations.properties.temperature.value)}º F
+                        </h1>
                     </div>
                 </div>
                 <span className={'badge fs-6 text-bg-secondary p-2 fw-light shadow-sm'}>

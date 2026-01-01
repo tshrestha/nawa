@@ -22,7 +22,9 @@ export default function ShortForecast({ forecastResult }: { forecastResult: Fore
                     <div className={'col-1 text-end'}>
                         <img src={windIcon} alt='clear day' className='img-fluid' />
                     </div>
-                    <div className={'col-4 text-start'}><small>{p.windSpeed.replace('to', '-')}</small></div>
+                    <div className={'col-4 text-start'}>
+                        <small>{p.windSpeed.replace('to', '-')}</small>
+                    </div>
                     <div className={'col-auto text-end'}>{p.temperature}º</div>
                 </div>
             ))}
