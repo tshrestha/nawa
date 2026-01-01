@@ -98,7 +98,7 @@ export default function LocationSearchForm() {
     }, [searchResults])
 
     return (
-        <div className={'container position-fixed bottom-0 start-0 pb-3 z-3'}>
+        <div className={'container position-fixed bottom-0 start-0 pb-4 z-3'}>
             <div
                 id='suggestions'
                 className={`list-group list-group-flush rounded rounded-3 position-absolute start-0 bottom-100 pb-1 w-100 ${searchResults?.length && searchResultsVisible ? '' : 'd-none'}`}
