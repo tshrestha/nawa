@@ -7,5 +7,12 @@ export default defineConfig({
     base: '/nawa',
     server: {
         port: 3000
+    },
+    css: {
+        preprocessorOptions: {
+            scss: {
+                silenceDeprecations: ['import', 'if-function', 'global-builtin', 'color-functions']
+            }
+        }
     }
 })

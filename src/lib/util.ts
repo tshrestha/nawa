@@ -25,3 +25,22 @@ export function getLocation() {
         )
     })
 }
+
+export function getTimeOfDay() {
+    const date = new Date()
+    const hours = date.getHours()
+
+    if (hours >= 5 && hours < 9) {
+        return 'morning'
+    }
+
+    if (hours >= 9 && hours < 17) {
+        return 'day'
+    }
+
+    if (hours >= 17 && hours < 20) {
+        return 'evening'
+    }
+
+    return 'night'
+}

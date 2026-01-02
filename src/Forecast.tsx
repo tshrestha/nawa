@@ -7,7 +7,6 @@ import LatestObservations from './LatestObservations.tsx'
 import ShortForecast from './ShortForecast.tsx'
 import DetailedForecast from './DetailedForecaset.tsx'
 import { getLatLon } from './lib/util.ts'
-import LocationSearchForm from './LocationSearchForm.tsx'
 
 export interface ForecastProps {
     point?: {
@@ -64,7 +63,6 @@ export default function Forecast({ point }: ForecastProps) {
                     <DetailedForecast forecastResult={forecastResult} />
                 </>
             )}
-            <LocationSearchForm />
         </>
     )
 }

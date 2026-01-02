@@ -14,11 +14,9 @@
     background-color: #1a2238 !important;
 }
 
-a.search-result.active,
-a.search-result:hover {
-    background-color: var(--bs-list-group-active-bg) !important;
-}
-
-.form-control.text-bg-dark::placeholder {
-    color: var(--bs-dark-text-emphasis);
+span.badge.text-bg-secondary {
+    background-color: transparent !important;
+    color: var(--bs-dark-text-emphasis) !important;
+    border: 1px solid;
+    border-color: var(--bs-dark-border-color);
 }

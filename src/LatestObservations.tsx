@@ -30,7 +30,7 @@ export default function LatestObservations({ point, name }: LatestObservationsPr
             .then((p: Point) => getClosestStation(p.properties.observationStations) as Promise<Station>)
             .then((s: Station) => getLatestObservations(s.properties.stationIdentifier))
             .then((o: LatestObservations) => setLatestObservations(o))
-    }, [point])
+    }, [point, name])
 
     return (
         latestObservations && (
@@ -54,7 +54,7 @@ export default function LatestObservations({ point, name }: LatestObservationsPr
                         </h1>
                     </div>
                 </div>
-                <span className={'badge fs-6 text-bg-secondary p-2 fw-light shadow-sm'}>
+                <span className={'badge text-bg-secondary fs-6 p-2 fw-light'}>
                     {latestObservations.properties.textDescription}
                 </span>
             </div>
