@@ -1,6 +1,5 @@
 import { denver } from './lib/nws.ts'
 import Forecast from './Forecast.tsx'
-import LocationSearchForm from './LocationSearchForm.tsx'
 import { useEffect, useState } from 'react'
 import { getLocation } from './lib/util.ts'
 
@@ -13,7 +12,6 @@ export default function Home() {
     }, [])
     return (
         <>
-            <LocationSearchForm />
             {latlon ? (
                 <Forecast point={{ lat: latlon.lat, lon: latlon.lon }} />
             ) : (
