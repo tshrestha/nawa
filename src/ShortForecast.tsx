@@ -1,5 +1,4 @@
 import { getIcon } from './lib/wicons.ts'
-import { getTimeOfDay } from './lib/util.ts'
 import type { ForecastResult } from './lib/nws.ts'
 import windIcon from './assets/weather-icons-master/production/fill/all/wind.svg'
 
@@ -17,7 +16,7 @@ export default function ShortForecast({ forecastResult }: { forecastResult: Fore
                     )}
                     <div className={'col-1 text-start'}>
                         <img
-                            src={getIcon({ keyword: p.shortForecast, ...getTimeOfDay(p.name) })}
+                            src={getIcon({ keyword: p.shortForecast, isDay: p.isDaytime, isNight: !p.isDaytime })}
                             alt={p.shortForecast}
                             className='img-fluid'
                         />

@@ -1,6 +1,6 @@
 import type { ForecastResult } from './lib/nws.ts'
 import { getIcon } from './lib/wicons.ts'
-import { getPrecipType, getTimeOfDay } from './lib/util.ts'
+import { getPrecipType } from './lib/util.ts'
 import windIcon from './assets/weather-icons-master/production/fill/all/wind.svg'
 import raindropIcon from './assets/weather-icons-master/production/fill/all/raindrop.svg'
 import snowflakeIcon from './assets/weather-icons-master/production/fill/all/snowflake.svg'
@@ -18,7 +18,11 @@ export default function DetailedForecast({ forecastResult }: { forecastResult?: 
                             </div>
                             <div className={'col-1 text-start'}>
                                 <img
-                                    src={getIcon({ keyword: p.shortForecast, ...getTimeOfDay(p.name) })}
+                                    src={getIcon({
+                                        keyword: p.shortForecast,
+                                        isDay: p.isDaytime,
+                                        isNight: !p.isDaytime
+                                    })}
                                     alt={p.shortForecast}
                                     className='img-fluid'
                                 />

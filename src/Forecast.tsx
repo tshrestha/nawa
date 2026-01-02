@@ -33,13 +33,13 @@ export default function Forecast({ point }: ForecastProps) {
 
     useEffect(() => {
         reverse(lat, lon).then((r: GeocodingResult) => setForecastLocation(r))
-    }, [])
+    }, [point])
 
     useEffect(() => {
         getPoint(lat, lon)
             .then((p: Point): Promise<ForecastResult> => getForecast(p.properties.forecast) as Promise<ForecastResult>)
             .then((f: ForecastResult) => setForecastResult(f))
-    }, [])
+    }, [point])
 
     return (
         <>
