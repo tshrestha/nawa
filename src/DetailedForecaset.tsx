@@ -1,4 +1,8 @@
 import type { ForecastResult } from './lib/nws.ts'
+import { getIcon } from './lib/wicons.ts'
+import { getTimeOfDay } from './lib/util.ts'
+import windIcon from './assets/weather-icons-master/production/fill/all/wind.svg'
+import raindropIcon from './assets/weather-icons-master/production/fill/all/raindrop.svg'
 
 export default function DetailedForecast({ forecastResult }: { forecastResult?: ForecastResult }) {
     return (
@@ -7,7 +11,34 @@ export default function DetailedForecast({ forecastResult }: { forecastResult?: 
             <div className='list-group list-group-flush rounded-4'>
                 {forecastResult?.properties.periods.map((p: Record<string, string>, index: number) => (
                     <div key={index} className={'list-group-item'}>
-                        <h6>{p.name}</h6>
+                        <div className={'d-flex justify-content-between align-items-center mb-3'}>
+                            <div className={'col-2 fw-medium'}>
+                                {`${new Date(p.startTime).toLocaleDateString('en-US', { weekday: 'short' })}${p.isDaytime ? '' : ' night'}`}
+                            </div>
+                            <div className={'col-1 text-start'}>
+                                <img
+                                    src={getIcon({ keyword: p.shortForecast, ...getTimeOfDay(p.name) })}
+                                    alt={p.shortForecast}
+                                    className='img-fluid'
+                                />
+                            </div>
+                            <div className={'col-1 text-end ms-4'}>
+                                <img src={windIcon} alt='wind icon' className='img-fluid' />
+                            </div>
+                            <div className={'col-3 text-start'}>
+                                <small>{p.windSpeed.replace('to', '-')}</small>
+                            </div>
+                            <div className={'col-1 text-end'}>
+                                <img src={raindropIcon} alt='precipatation' className='img-fluid' />
+                            </div>
+                            <div className={'col-2 text-start'}>
+                                <small>{
+                                    // @ts-ignore
+                                    `${p.probabilityOfPrecipitation['value']}%`
+                                }</small>
+                            </div>
+                            <div className={'col-auto text-end fw-medium'}>{p.temperature}º</div>
+                        </div>
                         <p>{p.detailedForecast}</p>
                     </div>
                 ))}

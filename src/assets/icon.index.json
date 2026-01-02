@@ -25,41 +25,19 @@
             }
         },
         { "i": 2, "$": { "0": [{ "v": "cloudy", "i": 0, "n": 1 }], "1": { "v": "cloudy.svg", "n": 1 } } },
-        { "i": 3, "$": { "0": [{ "v": "overcast", "i": 0, "n": 1 }], "1": { "v": "overcast.svg", "n": 1 } } },
-        { "i": 4, "$": { "0": [{ "v": "overcast", "i": 0, "n": 1 }], "1": { "v": "overcast-day.svg", "n": 1 } } },
-        { "i": 5, "$": { "0": [{ "v": "overcast", "i": 0, "n": 1 }], "1": { "v": "overcast-night.svg", "n": 1 } } },
+        { "i": 3, "$": { "0": [{ "v": "cloudy", "i": 0, "n": 1 }], "1": { "v": "cloudy.svg", "n": 1 } } },
+        { "i": 4, "$": { "0": [{ "v": "cloudy", "i": 0, "n": 1 }], "1": { "v": "cloudy.svg", "n": 1 } } },
+        { "i": 5, "$": { "0": [{ "v": "overcast", "i": 0, "n": 1 }], "1": { "v": "overcast.svg", "n": 1 } } },
+        { "i": 6, "$": { "0": [{ "v": "overcast", "i": 0, "n": 1 }], "1": { "v": "overcast-day.svg", "n": 1 } } },
+        { "i": 7, "$": { "0": [{ "v": "overcast", "i": 0, "n": 1 }], "1": { "v": "overcast-night.svg", "n": 1 } } },
         {
-            "i": 6,
+            "i": 8,
             "$": {
                 "0": [
                     { "v": "light rain", "i": 1, "n": 0.707 },
                     { "v": "drizzle", "i": 0, "n": 1 }
                 ],
                 "1": { "v": "drizzle.svg", "n": 1 }
-            }
-        },
-        {
-            "i": 7,
-            "$": {
-                "0": [
-                    { "v": "showers likely", "i": 3, "n": 0.707 },
-                    { "v": "rain showers", "i": 2, "n": 0.707 },
-                    { "v": "moderate rain", "i": 1, "n": 0.707 },
-                    { "v": "rain", "i": 0, "n": 1 }
-                ],
-                "1": { "v": "rain.svg", "n": 1 }
-            }
-        },
-        {
-            "i": 8,
-            "$": {
-                "0": [
-                    { "v": "showers likely", "i": 3, "n": 0.707 },
-                    { "v": "rain showers", "i": 2, "n": 0.707 },
-                    { "v": "moderate rain", "i": 1, "n": 0.707 },
-                    { "v": "rain", "i": 0, "n": 1 }
-                ],
-                "1": { "v": "rain.svg", "n": 1 }
             }
         },
         {
@@ -77,19 +55,43 @@
         {
             "i": 10,
             "$": {
+                "0": [
+                    { "v": "showers likely", "i": 3, "n": 0.707 },
+                    { "v": "rain showers", "i": 2, "n": 0.707 },
+                    { "v": "moderate rain", "i": 1, "n": 0.707 },
+                    { "v": "rain", "i": 0, "n": 1 }
+                ],
+                "1": { "v": "rain.svg", "n": 1 }
+            }
+        },
+        {
+            "i": 11,
+            "$": {
+                "0": [
+                    { "v": "showers likely", "i": 3, "n": 0.707 },
+                    { "v": "rain showers", "i": 2, "n": 0.707 },
+                    { "v": "moderate rain", "i": 1, "n": 0.707 },
+                    { "v": "rain", "i": 0, "n": 1 }
+                ],
+                "1": { "v": "rain.svg", "n": 1 }
+            }
+        },
+        {
+            "i": 12,
+            "$": {
                 "0": [{ "v": "light rain", "i": 0, "n": 0.707 }],
                 "1": { "v": "partly-cloudy-day-rain.svg", "n": 1 }
             }
         },
         {
-            "i": 11,
+            "i": 13,
             "$": {
                 "0": [{ "v": "light rain", "i": 0, "n": 0.707 }],
                 "1": { "v": "partly-cloudy-night-rain.svg", "n": 1 }
             }
         },
         {
-            "i": 12,
+            "i": 14,
             "$": {
                 "0": [
                     { "v": "freezing rain", "i": 1, "n": 0.707 },
@@ -99,7 +101,7 @@
             }
         },
         {
-            "i": 13,
+            "i": 15,
             "$": {
                 "0": [
                     { "v": "partly sunny", "i": 2, "n": 0.707 },
@@ -110,7 +112,7 @@
             }
         },
         {
-            "i": 14,
+            "i": 16,
             "$": {
                 "0": [
                     { "v": "mostly cloudy", "i": 1, "n": 0.707 },
@@ -119,9 +121,9 @@
                 "1": { "v": "partly-cloudy-night.svg", "n": 1 }
             }
         },
-        { "i": 15, "$": { "0": [{ "v": "mist", "i": 0, "n": 1 }], "1": { "v": "mist.svg", "n": 1 } } },
+        { "i": 17, "$": { "0": [{ "v": "mist", "i": 0, "n": 1 }], "1": { "v": "mist.svg", "n": 1 } } },
         {
-            "i": 16,
+            "i": 18,
             "$": {
                 "0": [
                     { "v": "thunder storms", "i": 2, "n": 0.707 },
@@ -132,7 +134,7 @@
             }
         },
         {
-            "i": 17,
+            "i": 19,
             "$": {
                 "0": [
                     { "v": "thunder storms", "i": 2, "n": 0.707 },
@@ -143,7 +145,7 @@
             }
         },
         {
-            "i": 18,
+            "i": 20,
             "$": {
                 "0": [
                     { "v": "thunder storms", "i": 2, "n": 0.707 },
@@ -154,7 +156,7 @@
             }
         },
         {
-            "i": 19,
+            "i": 21,
             "$": {
                 "0": [
                     { "v": "thunder storms", "i": 2, "n": 0.707 },
@@ -165,7 +167,7 @@
             }
         },
         {
-            "i": 20,
+            "i": 22,
             "$": {
                 "0": [
                     { "v": "thunder storms", "i": 2, "n": 0.707 },
@@ -176,7 +178,7 @@
             }
         },
         {
-            "i": 21,
+            "i": 23,
             "$": {
                 "0": [
                     { "v": "snow", "i": 3, "n": 1 },
@@ -188,7 +190,7 @@
             }
         },
         {
-            "i": 22,
+            "i": 24,
             "$": {
                 "0": [
                     { "v": "foggy", "i": 1, "n": 1 },
@@ -198,7 +200,7 @@
             }
         },
         {
-            "i": 23,
+            "i": 25,
             "$": {
                 "0": [
                     { "v": "foggy", "i": 1, "n": 1 },
@@ -208,35 +210,13 @@
             }
         },
         {
-            "i": 24,
+            "i": 26,
             "$": {
                 "0": [
                     { "v": "foggy", "i": 1, "n": 1 },
                     { "v": "fog", "i": 0, "n": 1 }
                 ],
                 "1": { "v": "fog-night.svg", "n": 1 }
-            }
-        },
-        {
-            "i": 25,
-            "$": {
-                "0": [
-                    { "v": "snow showers", "i": 2, "n": 0.707 },
-                    { "v": "blowing snow", "i": 1, "n": 0.707 },
-                    { "v": "snow", "i": 0, "n": 1 }
-                ],
-                "1": { "v": "./assets/weather-icons-master/production/fill/all/snow.svg", "n": 1 }
-            }
-        },
-        {
-            "i": 26,
-            "$": {
-                "0": [
-                    { "v": "snow showers", "i": 2, "n": 0.707 },
-                    { "v": "blowing snow", "i": 1, "n": 0.707 },
-                    { "v": "snow", "i": 0, "n": 1 }
-                ],
-                "1": { "v": "./assets/weather-icons-master/production/fill/all/snow.svg", "n": 1 }
             }
         },
         {
@@ -254,6 +234,28 @@
             "i": 28,
             "$": {
                 "0": [
+                    { "v": "snow showers", "i": 2, "n": 0.707 },
+                    { "v": "blowing snow", "i": 1, "n": 0.707 },
+                    { "v": "snow", "i": 0, "n": 1 }
+                ],
+                "1": { "v": "./assets/weather-icons-master/production/fill/all/snow.svg", "n": 1 }
+            }
+        },
+        {
+            "i": 29,
+            "$": {
+                "0": [
+                    { "v": "snow showers", "i": 2, "n": 0.707 },
+                    { "v": "blowing snow", "i": 1, "n": 0.707 },
+                    { "v": "snow", "i": 0, "n": 1 }
+                ],
+                "1": { "v": "./assets/weather-icons-master/production/fill/all/snow.svg", "n": 1 }
+            }
+        },
+        {
+            "i": 30,
+            "$": {
+                "0": [
                     { "v": "snow likely", "i": 1, "n": 0.707 },
                     { "v": "light snow", "i": 0, "n": 0.707 }
                 ],
@@ -261,7 +263,7 @@
             }
         },
         {
-            "i": 29,
+            "i": 31,
             "$": {
                 "0": [
                     { "v": "snow likely", "i": 1, "n": 0.707 },

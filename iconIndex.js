@@ -21,6 +21,18 @@ export const icons = [
         night: true
     },
     {
+        path: 'cloudy.svg',
+        keywords: ['cloudy'],
+        day: true,
+        night: false
+    },
+    {
+        path: 'cloudy.svg',
+        keywords: ['cloudy'],
+        day: false,
+        night: true
+    },
+    {
         path: 'overcast.svg',
         keywords: ['overcast'],
         day: true,

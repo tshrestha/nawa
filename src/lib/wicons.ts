@@ -60,6 +60,20 @@ export const icons = [
         icon: Cloudy
     },
     {
+        path: './assets/weather-icons-master/production/fill/all/cloudy.svg',
+        keywords: ['cloudy'],
+        day: true,
+        night: false,
+        icon: Cloudy
+    },
+    {
+        path: './assets/weather-icons-master/production/fill/all/cloudy.svg',
+        keywords: ['cloudy'],
+        day: false,
+        night: true,
+        icon: Cloudy
+    },
+    {
         path: './assets/weather-icons-master/production/fill/all/overcast.svg',
         keywords: ['overcast'],
         day: true,

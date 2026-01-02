@@ -49,7 +49,7 @@ export default function LatestObservations({ point, name }: LatestObservationsPr
                     </div>
                     <div className='col text-start'>
                         <h1 className={'display-1 align-middle'}>
-                            {toF(latestObservations.properties.temperature.value)}º F
+                            {toF(latestObservations.properties.temperature.value)}º
                         </h1>
                     </div>
                 </div>
