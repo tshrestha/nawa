@@ -229,21 +229,21 @@ export const icons = [
     },
     {
         path: './assets/weather-icons-master/production/fill/all/snow.svg',
-        keywords: ['snow', 'blowing snow', 'snow showers'],
+        keywords: ['snow', 'blowing snow', 'snow showers', 'snow showers likely'],
         day: true,
         night: true,
         icon: Snow
     },
     {
         path: './assets/weather-icons-master/production/fill/all/snow.svg',
-        keywords: ['snow', 'blowing snow', 'snow showers'],
+        keywords: ['snow', 'blowing snow', 'snow showers', 'snow showers likely'],
         day: true,
         night: false,
         icon: Snow
     },
     {
         path: './assets/weather-icons-master/production/fill/all/snow.svg',
-        keywords: ['snow', 'blowing snow', 'snow showers'],
+        keywords: ['snow', 'blowing snow', 'snow showers', 'snow showers likely'],
         day: false,
         night: true,
         icon: Snow
@@ -284,10 +284,12 @@ export function getIcon({ keyword, isDay, isNight }: Record<string, string | boo
     const tokens = (keyword as string).split(' ')
 
     let searchTerm
-    if (tokens.length > 1) {
+    if (tokens.length === 1) {
+        searchTerm = tokens.pop()
+    } else if (tokens.length === 2) {
         searchTerm = tokens.slice(-2).join(' ')
     } else {
-        searchTerm = tokens.pop()
+        searchTerm = tokens.slice(-3).join(' ')
     }
 
     console.log('searchTerm', searchTerm)

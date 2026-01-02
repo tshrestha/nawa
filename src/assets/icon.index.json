@@ -223,6 +223,7 @@
             "i": 27,
             "$": {
                 "0": [
+                    { "v": "snow showers likely", "i": 3, "n": 0.577 },
                     { "v": "snow showers", "i": 2, "n": 0.707 },
                     { "v": "blowing snow", "i": 1, "n": 0.707 },
                     { "v": "snow", "i": 0, "n": 1 }
@@ -234,6 +235,7 @@
             "i": 28,
             "$": {
                 "0": [
+                    { "v": "snow showers likely", "i": 3, "n": 0.577 },
                     { "v": "snow showers", "i": 2, "n": 0.707 },
                     { "v": "blowing snow", "i": 1, "n": 0.707 },
                     { "v": "snow", "i": 0, "n": 1 }
@@ -245,6 +247,7 @@
             "i": 29,
             "$": {
                 "0": [
+                    { "v": "snow showers likely", "i": 3, "n": 0.577 },
                     { "v": "snow showers", "i": 2, "n": 0.707 },
                     { "v": "blowing snow", "i": 1, "n": 0.707 },
                     { "v": "snow", "i": 0, "n": 1 }

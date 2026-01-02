@@ -34,3 +34,8 @@ export function getLatLon(path: string) {
 export function toAbbreviatedDay(day: string): string {
     return abbreviatedDay[day]
 }
+
+export function getPrecipType(forecast: string) {
+    const tokens = forecast.toLowerCase().split(' ')
+    return tokens.includes('snow') ? 'snow' : 'rain'
+}

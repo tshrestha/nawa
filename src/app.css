@@ -1,17 +1,17 @@
 .morning {
-    background-color: #f4c2c2;
+    background-color: #f4c2c2 !important;
 }
 
 .day {
-    background-color: #87ceeb;
+    background-color: #87ceeb !important;
 }
 
 .evening {
-    background-color: #ff8c42;
+    background-color: #ff8c42 !important;
 }
 
 .night {
-    background-color: #1a2238;
+    background-color: #1a2238 !important;
 }
 
 a.search-result.active,

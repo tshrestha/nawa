@@ -36,6 +36,7 @@ export default function LatestObservations({ point, name }: LatestObservationsPr
         latestObservations && (
             <div className={'mt-4 mb-4 text-center'}>
                 <h1 className={'display-6'}>{name}</h1>
+                <p className={'mb-0'}>Right meow 🐱 </p>
                 <div className={'d-flex justify-content-center align-items-center'}>
                     <div className='col text-end'>
                         <img
