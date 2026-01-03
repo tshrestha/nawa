@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { Link, NavLink, useNavigate } from 'react-router'
 import { debounce } from 'lodash-es'
 
@@ -8,7 +8,7 @@ import { addItem, getItem, setItem, savedSelectionsCollectionKey } from './lib/c
 
 export default function LocationSearchForm() {
     const navigate = useNavigate()
-    const searchInputRef = useRef(null)
+    const searchInputRef = useRef<HTMLInputElement>(null)
     const [searchResults, setSearchResults] = useState<Feature[]>()
     const [searchResultsVisible, setSearchResultsVisible] = useState(false)
 
@@ -39,26 +39,38 @@ export default function LocationSearchForm() {
         }
     }
 
-    const onChange = () => {
+    const debouncedSearch = useMemo(
+        () =>
+            debounce((query: string) => {
+                geocodeSearch(query).then(({ features }) => {
+                    setItem(query, features)
+                    setSearchResults(features)
+                })
+            }, 300),
+        []
+    )
+
+    useEffect(() => {
+        return () => {
+            debouncedSearch.cancel()
+        }
+    }, [debouncedSearch])
+
+    const onChange = useCallback(() => {
         if (searchInputRef.current) {
-            const query = (searchInputRef.current as HTMLInputElement).value
+            const query = searchInputRef.current.value
             if (query && query.length > 2) {
                 const cached = getItem(query)
                 if (cached) {
                     setSearchResults(cached)
                 } else {
-                    debounce(() => {
-                        geocodeSearch(query).then(({ features }) => {
-                            setItem(query, features)
-                            setSearchResults(features)
-                        })
-                    }, 300)()
+                    debouncedSearch(query)
                 }
             } else {
                 setSearchResults([])
             }
         }
-    }
+    }, [debouncedSearch])
 
     const onKeyDown = (e: React.KeyboardEvent) => {
         if (searchResults && searchResults.length) {

@@ -27,23 +27,40 @@ export default function Map() {
         if (mapContainerRef.current && latlon) {
             mapboxgl.accessToken = import.meta.env.VITE_MAPBOX_TOKEN
             addMapClass()
+
             mapRef.current = new mapboxgl.Map({
-                container: mapContainerRef.current, // container ID
+                container: mapContainerRef.current,
                 style: 'mapbox://styles/mapbox/streets-v12',
                 center: [latlon.lon, latlon.lat],
                 zoom: 9
             })
 
-            mapRef.current.on('click', (e) => {
+            mapRef.current.addControl(
+                new mapboxgl.GeolocateControl({
+                    positionOptions: {
+                        enableHighAccuracy: true
+                    },
+                    showAccuracyCircle: true
+                }),
+                'bottom-right'
+            )
+
+            const handleClick = (e: mapboxgl.MapMouseEvent) => {
                 const { lat, lng } = e.lngLat
                 reverse(lat.toFixed(6), lng.toFixed(6)).then((result) => {
-                    console.log(result)
                     new mapboxgl.Popup()
                         .setLngLat(e.lngLat)
                         .setHTML(`<a href="#/forecast/${lat.toFixed(4)},${lng.toFixed(4)}">${result.display_name}</a>`)
                         .addTo(mapRef.current as mapboxgl.Map)
                 })
-            })
+            }
+
+            mapRef.current.on('click', handleClick)
+
+            return () => {
+                mapRef.current?.off('click', handleClick)
+                mapRef.current?.remove()
+            }
         }
     }, [latlon])
 

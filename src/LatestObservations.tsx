@@ -12,6 +12,7 @@ import {
 import { getIcon } from './lib/wicons.ts'
 import { reverseGeocodeSearch } from './lib/geocoding.ts'
 import type { Feature } from 'geojson'
+import { getTimeOfDay } from './lib/util.ts'
 
 export interface LatestObservationsProps {
     point: {
@@ -26,8 +27,10 @@ export default function LatestObservations({ point }: LatestObservationsProps) {
     const [forecastLocation, setForecastLocation] = useState<Feature>()
     const [latestObservations, setLatestObservations] = useState<LatestObservations>()
     const [pending, isPending] = useState(true)
+    const timeOfDay = getTimeOfDay()
 
     useEffect(() => {
+        isPending(true)
         Promise.all([
             reverseGeocodeSearch(lat, lon),
             getPoint(lat, lon)
@@ -36,9 +39,10 @@ export default function LatestObservations({ point }: LatestObservationsProps) {
         ]).then(([r1, r2]: [r1: Feature, r2: LatestObservations]) => {
             setForecastLocation(r1)
             setLatestObservations(r2)
+            console.log(r2)
             isPending(false)
         })
-    }, [])
+    }, [lat, lon])
 
     return pending ? (
         <div className={'mt-4 mb-4 text-center'}>
@@ -61,8 +65,8 @@ export default function LatestObservations({ point }: LatestObservationsProps) {
                     <img
                         src={getIcon({
                             keyword: latestObservations?.properties.textDescription as string,
-                            isDay: true,
-                            isNight: false
+                            isDay: timeOfDay !== 'night',
+                            isNight: timeOfDay === 'night'
                         })}
                         className={'img-fluid w-50'}
                     />

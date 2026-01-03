@@ -6,7 +6,7 @@ export default function ShortForecast({ forecastResult }: { forecastResult: Fore
     return (
         <div className='list-group rounded-4 shadow-sm mt-4 mb-4'>
             {forecastResult?.properties.periods.map((p, i) => (
-                <div key={i} className='list-group-item d-flex justify-content-between align-items-center'>
+                <div key={p.startTime} className='list-group-item d-flex justify-content-between align-items-center'>
                     {i <= 1 && <div className={'col-3 fw-medium'}>{p.name}</div>}
                     {i > 1 && (
                         <div
