@@ -14,5 +14,35 @@ export default defineConfig({
                 silenceDeprecations: ['import', 'if-function', 'global-builtin', 'color-functions']
             }
         }
+    },
+    build: {
+        rollupOptions: {
+            output: {
+                manualChunks(id) {
+                    if (id.includes('node_modules')) {
+                        // React core - frequently cached, loaded on every page
+                        if (id.includes('/react/') || id.includes('/react-dom/') || id.includes('/react-router/')) {
+                            return 'vendor-react'
+                        }
+                        // Mapbox - large library, only needed on map page
+                        if (id.includes('/mapbox-gl/')) {
+                            return 'vendor-mapbox'
+                        }
+                        // UI framework
+                        if (id.includes('/bootstrap/') || id.includes('/bootstrap-icons/')) {
+                            return 'vendor-ui'
+                        }
+                        // Utility libraries
+                        if (id.includes('/lodash-es/') || id.includes('/fuse.js/')) {
+                            return 'vendor-utils'
+                        }
+                        // Parser library
+                        if (id.includes('/antlr4/')) {
+                            return 'vendor-parser'
+                        }
+                    }
+                }
+            }
+        }
     }
 })

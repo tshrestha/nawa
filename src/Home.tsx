@@ -1,8 +1,9 @@
 import { denver } from './lib/nws.ts'
-import Forecast from './Forecast.tsx'
-import { useEffect, useState } from 'react'
+import { lazy, useEffect, useState } from 'react'
 import { getLocation, removeMapClass } from './lib/util.ts'
 import LocationSearchForm from './LocationSearchForm.tsx'
+
+const Forecast = lazy(() => import('./Forecast.tsx'))
 
 export default function Home() {
     removeMapClass()

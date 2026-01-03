@@ -1,4 +1,4 @@
-import type { Feature, FeatureCollection } from 'geojson'
+import type { FeatureCollection } from 'geojson'
 import { getItem, setItem } from './cache.ts'
 
 const baseURL = 'https://nominatim.openstreetmap.org'
@@ -24,7 +24,7 @@ export async function geocodeSearch(query: string): Promise<Partial<FeatureColle
     return await response.json()
 }
 
-export async function reverseGeocodeSearch(lat: string, lon: string): Promise<Feature | null> {
+export async function reverseGeocodeSearch(lat: string, lon: string) {
     const response = await fetch(`${reverseGeocodeURL}?lat=${lat}&lon=${lon}`, {
         method: 'GET',
         headers: {

@@ -10,54 +10,72 @@ import {
     toF
 } from './lib/nws.ts'
 import { getIcon } from './lib/wicons.ts'
+import { reverseGeocodeSearch } from './lib/geocoding.ts'
+import type { Feature } from 'geojson'
 
 export interface LatestObservationsProps {
     point: {
         lat: string
         lon: string
     }
-    name: string
+    name?: string
 }
 
-export default function LatestObservations({ point, name }: LatestObservationsProps) {
+export default function LatestObservations({ point }: LatestObservationsProps) {
+    const { lat, lon } = point
+    const [forecastLocation, setForecastLocation] = useState<Feature>()
     const [latestObservations, setLatestObservations] = useState<LatestObservations>()
+    const [pending, isPending] = useState(true)
 
     useEffect(() => {
-        const lat = parseFloat(point.lat).toFixed(4)
-        const lon = parseFloat(point.lon).toFixed(4)
+        Promise.all([
+            reverseGeocodeSearch(lat, lon),
+            getPoint(lat, lon)
+                .then((p: Point) => getClosestStation(p.properties.observationStations) as Promise<Station>)
+                .then((s: Station) => getLatestObservations(s.properties.stationIdentifier))
+        ]).then(([r1, r2]: [r1: Feature, r2: LatestObservations]) => {
+            setForecastLocation(r1)
+            setLatestObservations(r2)
+            isPending(false)
+        })
+    }, [])
 
-        getPoint(lat, lon)
-            .then((p: Point) => getClosestStation(p.properties.observationStations) as Promise<Station>)
-            .then((s: Station) => getLatestObservations(s.properties.stationIdentifier))
-            .then((o: LatestObservations) => setLatestObservations(o))
-    }, [point, name])
-
-    return (
-        latestObservations && (
-            <div className={'mt-4 mb-4 text-center'}>
-                <h1 className={'display-6'}>{name}</h1>
-                <p className={'mb-0'}>Right meow 🐱 </p>
-                <div className={'d-flex justify-content-center align-items-center'}>
-                    <div className='col text-end'>
-                        <img
-                            src={getIcon({
-                                keyword: latestObservations.properties.textDescription,
-                                isDay: true,
-                                isNight: false
-                            })}
-                            className={'img-fluid w-50'}
-                        />
-                    </div>
-                    <div className='col text-start'>
-                        <h1 className={'display-1 align-middle'}>
-                            {toF(latestObservations.properties.temperature.value)}º
-                        </h1>
-                    </div>
+    return pending ? (
+        <div className={'mt-4 mb-4 text-center'}>
+            <h1 className={'display-6 placeholder-glow'}></h1>
+            <p className={'mb-0 placeholder'}></p>
+            <div className={'d-flex justify-content-center align-items-center'}>
+                <div className='col text-end placeholder-lg'></div>
+                <div className='col text-start'>
+                    <h1 className={'display-1 align-middle placeholder-lg'}></h1>
                 </div>
-                <span className={'badge text-bg-secondary fs-6 p-2 fw-light'}>
-                    {latestObservations.properties.textDescription}
-                </span>
             </div>
-        )
+            <span className={'badge text-bg-secondary fs-6 p-2 fw-light placeholder'}></span>
+        </div>
+    ) : (
+        <div className={'mt-4 mb-4 text-center'}>
+            <h1 className={'display-6'}>{forecastLocation?.properties?.name}</h1>
+            <p className={'mb-0'}>Right meow 🐱 </p>
+            <div className={'d-flex justify-content-center align-items-center'}>
+                <div className='col text-end'>
+                    <img
+                        src={getIcon({
+                            keyword: latestObservations?.properties.textDescription as string,
+                            isDay: true,
+                            isNight: false
+                        })}
+                        className={'img-fluid w-50'}
+                    />
+                </div>
+                <div className='col text-start'>
+                    <h1 className={'display-1 align-middle'}>
+                        {toF(latestObservations?.properties.temperature.value as number)}º
+                    </h1>
+                </div>
+            </div>
+            <span className={'badge text-bg-secondary fs-6 p-2 fw-light'}>
+                {latestObservations?.properties.textDescription}
+            </span>
+        </div>
     )
 }

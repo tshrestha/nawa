@@ -280,7 +280,6 @@ const fuse = new Fuse(
 )
 
 export function getIcon({ keyword, isDay, isNight }: Record<string, string | boolean>) {
-    console.log(keyword, `isNight: ${isNight}`, `isDay: ${isDay}`)
     const tokens = (keyword as string).split(' ')
 
     let searchTerm
@@ -292,15 +291,11 @@ export function getIcon({ keyword, isDay, isNight }: Record<string, string | boo
         searchTerm = tokens.slice(-3).join(' ')
     }
 
-    console.log('searchTerm', searchTerm)
     const searchResults: FuseResult<Icon>[] = fuse.search(searchTerm as string)
-    console.log('Fuse Results', searchResults)
 
     const matchedIcons: Icon[] = searchResults.filter((s) => s.score! < 1).map((s) => s.item)
-    console.log(`matchedIcons`, matchedIcons)
 
     const filteredIcons = matchedIcons.filter((i) => i && i.day === isDay && i.night === isNight)
-    console.log(`filteredIcons`, filteredIcons)
 
     return filteredIcons.length ? filteredIcons[0].icon : ClearDay
 }

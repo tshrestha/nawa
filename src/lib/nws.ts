@@ -44,12 +44,16 @@ export interface LatestObservations {
     }
 }
 
+const headers = {
+    'User-Agent': 'Elevation Code Works LLC'
+}
+
 export function toF(temp: number) {
     return Math.round((temp * 9) / 5 + 32)
 }
 
 export async function getPoint(lat: string, lon: string) {
-    const response = await fetch(`${weatherURL}/points/${lat},${lon}`)
+    const response = await fetch(`${weatherURL}/points/${lat},${lon}`, { headers })
     if (!response.ok) {
         console.error(`failed to fetch point ${lat},${lon}`)
         return null
@@ -59,7 +63,7 @@ export async function getPoint(lat: string, lon: string) {
 }
 
 export async function getClosestStation(stationsURL: string) {
-    const response = await fetch(stationsURL)
+    const response = await fetch(stationsURL, { headers })
     if (!response.ok) {
         console.error('failed to get stations')
         return null
@@ -71,7 +75,8 @@ export async function getClosestStation(stationsURL: string) {
 
 export async function getLatestObservations(stationID: string) {
     const response = await fetch(`${weatherURL}/stations/${stationID}/observations/latest`, {
-        cache: 'no-store'
+        cache: 'no-store',
+        headers
     })
     if (!response.ok) {
         console.error('failed to get latest observations')
@@ -82,7 +87,7 @@ export async function getLatestObservations(stationID: string) {
 }
 
 export async function getForecast(forecastURL: string) {
-    const response = await fetch(forecastURL)
+    const response = await fetch(forecastURL, { headers })
     if (!response.ok) {
         console.error('failed to get forecast')
         return null

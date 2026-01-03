@@ -3,7 +3,6 @@ import type { ForecastResult } from './lib/nws.ts'
 import windIcon from './assets/weather-icons-master/production/fill/all/wind.svg'
 
 export default function ShortForecast({ forecastResult }: { forecastResult: ForecastResult }) {
-    console.log('forecastResult', forecastResult)
     return (
         <div className='list-group rounded-4 shadow-sm mt-4 mb-4'>
             {forecastResult?.properties.periods.map((p, i) => (

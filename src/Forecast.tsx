@@ -1,13 +1,11 @@
 import { useEffect, useState } from 'react'
 import { Link, useLocation } from 'react-router'
 
-import { reverseGeocodeSearch } from './lib/geocoding.ts'
 import { type ForecastResult, type Point, getForecast, getPoint } from './lib/nws.ts'
 import LatestObservations from './LatestObservations.tsx'
 import ShortForecast from './ShortForecast.tsx'
 import DetailedForecast from './DetailedForecaset.tsx'
 import { getLatLon, removeMapClass } from './lib/util.ts'
-import type { Feature } from 'geojson'
 
 export interface ForecastProps {
     point?: {
@@ -30,22 +28,17 @@ export default function Forecast({ point }: ForecastProps) {
         lon = latlon.lon
     }
 
-    const [forecastLocation, setForecastLocation] = useState<Feature>()
     const [forecastResult, setForecastResult] = useState<ForecastResult>()
-
-    useEffect(() => {
-        reverseGeocodeSearch(lat, lon).then((r: Feature | null) => {
-            if (r) {
-                setForecastLocation(r)
-            }
-        })
-    }, [point])
+    const [pending, setPending] = useState(true)
 
     useEffect(() => {
         getPoint(lat, lon)
             .then((p: Point): Promise<ForecastResult> => getForecast(p.properties.forecast) as Promise<ForecastResult>)
-            .then((f: ForecastResult) => setForecastResult(f))
-    }, [point])
+            .then((f: ForecastResult) => {
+                setForecastResult(f)
+                setPending(false)
+            })
+    }, [])
 
     return (
         <>
@@ -56,10 +49,12 @@ export default function Forecast({ point }: ForecastProps) {
                     </button>
                 </Link>
             )}
-            {forecastLocation && <LatestObservations point={{ lat, lon }} name={forecastLocation.properties?.name} />}
-            {forecastResult && (
+            <LatestObservations point={{ lat, lon }} />
+            {pending ? (
+                <></>
+            ) : (
                 <>
-                    <ShortForecast forecastResult={forecastResult} />
+                    <ShortForecast forecastResult={forecastResult!} />
                     <DetailedForecast forecastResult={forecastResult} />
                 </>
             )}

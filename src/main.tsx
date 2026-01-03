@@ -2,12 +2,13 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import 'bootstrap-icons/font/bootstrap-icons.min.css'
 import './app.scss'
 
-import { StrictMode } from 'react'
+import { lazy, StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 
-import App from './App.tsx'
 import { HashRouter } from 'react-router'
 import { getTimeOfDay } from './lib/util.ts'
+
+const App = lazy(() => import('./App.tsx'))
 
 const timeofDay = getTimeOfDay()
 document.body.classList.remove('morning')

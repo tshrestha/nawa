@@ -14,11 +14,9 @@ export function getLocation() {
     return new Promise((resolve, reject) => {
         navigator.geolocation.getCurrentPosition(
             (p) => {
-                console.log('Geolocation', p)
                 resolve(p)
             },
             (e) => {
-                console.error(e)
                 reject(e)
             },
             { enableHighAccuracy: true, timeout: 5000 }
