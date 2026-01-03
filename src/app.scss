@@ -14,6 +14,10 @@
     background-color: #1a2238 !important;
 }
 
+.container {
+    max-width: 540px !important;
+}
+
 span.badge.text-bg-secondary {
     background-color: transparent !important;
     color: var(--bs-dark-text-emphasis) !important;
