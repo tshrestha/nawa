@@ -5,7 +5,7 @@ import { type ForecastResult, type Point, getForecast, getPoint } from './lib/nw
 import LatestObservations from './LatestObservations.tsx'
 import ShortForecast from './ShortForecast.tsx'
 import DetailedForecast from './DetailedForecaset.tsx'
-import { getLatLon, removeMapClass } from './lib/util.ts'
+import { getLatLon } from './lib/util.ts'
 
 export interface ForecastProps {
     point?: {
@@ -29,10 +29,6 @@ export default function Forecast({ point }: ForecastProps) {
 
     const [forecastResult, setForecastResult] = useState<ForecastResult>()
     const [pending, setPending] = useState(true)
-
-    useEffect(() => {
-        removeMapClass()
-    }, [])
 
     useEffect(() => {
         setPending(true)

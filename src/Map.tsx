@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from 'react'
 import mapboxgl from 'mapbox-gl'
 
 import { denver } from './lib/nws.ts'
-import { addMapClass, getLocation } from './lib/util.ts'
+import { getLocation } from './lib/util.ts'
 import { NavLink } from 'react-router'
 import { reverse } from './lib/geocoding.ts'
 
@@ -26,13 +26,13 @@ export default function Map() {
     useEffect(() => {
         if (mapContainerRef.current && latlon) {
             mapboxgl.accessToken = import.meta.env.VITE_MAPBOX_TOKEN
-            addMapClass()
 
             mapRef.current = new mapboxgl.Map({
                 container: mapContainerRef.current,
                 style: 'mapbox://styles/mapbox/streets-v12',
                 center: [latlon.lon, latlon.lat],
-                zoom: 9
+                zoom: 9,
+                logoPosition: 'top-left'
             })
 
             mapRef.current.addControl(
@@ -43,6 +43,13 @@ export default function Map() {
                     showAccuracyCircle: true
                 }),
                 'bottom-right'
+            )
+
+            mapRef.current.addControl(
+                new mapboxgl.NavigationControl({
+                    showCompass: true
+                }),
+                'top-right'
             )
 
             const handleClick = (e: mapboxgl.MapMouseEvent) => {
@@ -66,8 +73,8 @@ export default function Map() {
 
     return (
         <>
-            <div id={'map'} ref={mapContainerRef}></div>
-            <div className={'position-fixed bottom-0 mb-5 mx-4'}>
+            <div id={'map'} className={'position-fixed top-0 start-0 z-2'} ref={mapContainerRef}></div>
+            <div className={'position-fixed bottom-0 start-0 mb-3 mx-3 z-3'}>
                 <NavLink to={'/'} className={'btn btn-secondary btn-lg rounded-pill border-4'}>
                     <i className={'bi bi-arrow-left'}></i>
                 </NavLink>

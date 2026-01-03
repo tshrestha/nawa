@@ -1,6 +1,6 @@
 import { denver } from './lib/nws.ts'
 import { lazy, useEffect, useState } from 'react'
-import { getLocation, removeMapClass } from './lib/util.ts'
+import { getLocation } from './lib/util.ts'
 import LocationSearchForm from './LocationSearchForm.tsx'
 
 const Forecast = lazy(() => import('./Forecast.tsx'))
@@ -8,10 +8,6 @@ const Forecast = lazy(() => import('./Forecast.tsx'))
 export default function Home() {
     const [latlon, setLatLon] = useState<{ lat: string; lon: string } | null>(null)
     const [locationResolved, setLocationResolved] = useState(false)
-
-    useEffect(() => {
-        removeMapClass()
-    }, [])
 
     useEffect(() => {
         getLocation()
