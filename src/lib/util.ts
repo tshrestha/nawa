@@ -44,3 +44,13 @@ export function getTimeOfDay() {
 
     return 'night'
 }
+
+export function addMapClass() {
+    const root = document.getElementById('root')
+    root?.classList.add('map-route')
+}
+
+export function removeMapClass() {
+    const root = document.getElementById('root')
+    root?.classList.remove('map-route')
+}

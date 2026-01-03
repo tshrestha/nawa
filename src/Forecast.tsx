@@ -1,12 +1,13 @@
 import { useEffect, useState } from 'react'
 import { Link, useLocation } from 'react-router'
 
-import { type GeocodingResult, reverse } from './lib/geocoding.ts'
+import { reverseGeocodeSearch } from './lib/geocoding.ts'
 import { type ForecastResult, type Point, getForecast, getPoint } from './lib/nws.ts'
 import LatestObservations from './LatestObservations.tsx'
 import ShortForecast from './ShortForecast.tsx'
 import DetailedForecast from './DetailedForecaset.tsx'
-import { getLatLon } from './lib/util.ts'
+import { getLatLon, removeMapClass } from './lib/util.ts'
+import type { Feature } from 'geojson'
 
 export interface ForecastProps {
     point?: {
@@ -16,6 +17,7 @@ export interface ForecastProps {
 }
 
 export default function Forecast({ point }: ForecastProps) {
+    removeMapClass()
     const location = useLocation()
     let lat, lon
 
@@ -28,11 +30,15 @@ export default function Forecast({ point }: ForecastProps) {
         lon = latlon.lon
     }
 
-    const [forecastLocation, setForecastLocation] = useState<GeocodingResult>()
+    const [forecastLocation, setForecastLocation] = useState<Feature>()
     const [forecastResult, setForecastResult] = useState<ForecastResult>()
 
     useEffect(() => {
-        reverse(lat, lon).then((r: GeocodingResult) => setForecastLocation(r))
+        reverseGeocodeSearch(lat, lon).then((r: Feature | null) => {
+            if (r) {
+                setForecastLocation(r)
+            }
+        })
     }, [point])
 
     useEffect(() => {
@@ -50,13 +56,7 @@ export default function Forecast({ point }: ForecastProps) {
                     </button>
                 </Link>
             )}
-            <LatestObservations
-                point={{ lat, lon }}
-                name={
-                    (forecastLocation?.address as Record<string, string>)?.city ||
-                    (forecastLocation?.address as Record<string, string>)?.village
-                }
-            />
+            {forecastLocation && <LatestObservations point={{ lat, lon }} name={forecastLocation.properties?.name} />}
             {forecastResult && (
                 <>
                     <ShortForecast forecastResult={forecastResult} />

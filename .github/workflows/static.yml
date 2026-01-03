@@ -38,8 +38,9 @@ jobs:
             - name: Build React app
               run: npm run build
               env:
-                  VITE_NAWA_TOKEN: ${{ secrets.NAWATOKEN }}
                   VITE_GEOCODE_URL: ${{ vars.GEOCODE_URL }}
+                  VITE_NAWA_TOKEN: ${{ secrets.NAWATOKEN }}
+                  VITE_MAPBOX_TOKEN: ${{ secrets.MAPBOX_TOKEN }}
 
             - name: Upload build artifacts
               uses: actions/upload-pages-artifact@v3

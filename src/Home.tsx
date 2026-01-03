@@ -1,10 +1,11 @@
 import { denver } from './lib/nws.ts'
 import Forecast from './Forecast.tsx'
 import { useEffect, useState } from 'react'
-import { getLocation } from './lib/util.ts'
+import { getLocation, removeMapClass } from './lib/util.ts'
 import LocationSearchForm from './LocationSearchForm.tsx'
 
 export default function Home() {
+    removeMapClass()
     const [latlon, setLatLon] = useState<any>()
     useEffect(() => {
         getLocation().then((geolocation: any) => {

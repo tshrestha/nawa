@@ -17,6 +17,7 @@
         "bootstrap-icons": "^1.13.1",
         "fuse.js": "^7.1.0",
         "lodash-es": "^4.17.22",
+        "mapbox-gl": "^3.17.0",
         "react": "^19.2.3",
         "react-dom": "^19.2.3",
         "react-router": "^7.11.0"

@@ -20,3 +20,13 @@ span.badge.text-bg-secondary {
     border: 1px solid;
     border-color: var(--bs-dark-border-color);
 }
+
+#map {
+    height: 100vh !important;
+    width: 100vw;
+}
+
+.map-route {
+    margin: 0 !important;
+    padding: 0 !important;
+}

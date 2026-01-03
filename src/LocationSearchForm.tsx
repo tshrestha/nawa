@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react'
-import { Link, useNavigate } from 'react-router'
+import { Link, NavLink, useNavigate } from 'react-router'
 import { debounce } from 'lodash-es'
 
 import type { Feature } from 'geojson'
@@ -116,21 +116,34 @@ export default function LocationSearchForm() {
                     </Link>
                 ))}
             </div>
-            <input
-                autoComplete={'off'}
-                ref={searchInputRef}
-                id={'geocodingSearch'}
-                type='search'
-                name={'search'}
-                className='form-control form-control-lg rounded-pill border-4 shadow-sm'
-                placeholder='Search for a city or place'
-                aria-label='Location'
-                aria-describedby='search'
-                onChange={onChange}
-                onKeyDown={onKeyDown}
-                onFocus={onFocus}
-                onBlur={onBlur}
-            />
+            <div className={'d-flex justify-content-between align-items-center'}>
+                <div className={'col-9 me-2'}>
+                    <input
+                        autoComplete={'off'}
+                        ref={searchInputRef}
+                        id={'geocodingSearch'}
+                        type='search'
+                        name={'search'}
+                        className='form-control form-control-lg rounded-pill border-4 shadow-sm'
+                        placeholder='Search for a city or place'
+                        aria-label='Location'
+                        aria-describedby='search'
+                        onChange={onChange}
+                        onKeyDown={onKeyDown}
+                        onFocus={onFocus}
+                        onBlur={onBlur}
+                    />
+                </div>
+                <div className='col-3 ms-2'>
+                    <NavLink
+                        to={'/map'}
+                        type={'button'}
+                        className={'btn btn-secondary btn-lg rounded-circle border-4 shadow-sm'}
+                    >
+                        <i className={'bi bi-map'}></i>
+                    </NavLink>
+                </div>
+            </div>
         </div>
     )
 }
