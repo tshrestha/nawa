@@ -50,8 +50,8 @@ export default function Map() {
     return (
         <>
             <div id={'map'} ref={mapContainerRef}></div>
-            <div className={'position-fixed top-0 m-4'}>
-                <NavLink to={'/'} className={'btn btn-secondary btn-lg rounded-circle border-4'}>
+            <div className={'position-fixed bottom-0 mb-5 mx-4'}>
+                <NavLink to={'/'} className={'btn btn-secondary btn-lg rounded-pill border-4'}>
                     <i className={'bi bi-arrow-left'}></i>
                 </NavLink>
             </div>

@@ -116,8 +116,8 @@ export default function LocationSearchForm() {
                     </Link>
                 ))}
             </div>
-            <div className={'d-flex justify-content-between align-items-center'}>
-                <div className={'col-9 me-2'}>
+            <div className={'d-flex justify-content-between align-items-center position-relative'}>
+                <div className={'col-10 pe-2'}>
                     <input
                         autoComplete={'off'}
                         ref={searchInputRef}
@@ -134,11 +134,11 @@ export default function LocationSearchForm() {
                         onBlur={onBlur}
                     />
                 </div>
-                <div className='col-3 ms-2'>
+                <div className='col-2'>
                     <NavLink
                         to={'/map'}
                         type={'button'}
-                        className={'btn btn-secondary btn-lg rounded-circle border-4 shadow-sm'}
+                        className={'btn btn-secondary btn-lg rounded-pill border-4 shadow-sm'}
                     >
                         <i className={'bi bi-map'}></i>
                     </NavLink>
