@@ -3,7 +3,7 @@ import react from '@vitejs/plugin-react'
 
 export default defineConfig({
     plugins: [react()],
-    base: '/nawa',
+    base: '/condies',
     server: {
         port: 3000
     },
