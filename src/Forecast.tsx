@@ -6,7 +6,7 @@ import LatestObservations from './LatestObservations.tsx'
 import ShortForecast from './ShortForecast.tsx'
 import DetailedForecast from './DetailedForecaset.tsx'
 import { getLatLon } from './lib/util.ts'
-import ForecastPlaceholder from './lib/ForecastPlaceholder.tsx'
+import ForecastPlaceholder from './ForecastPlaceholder.tsx'
 import HomeButton from './HomeButton.tsx'
 
 export interface ForecastProps {
