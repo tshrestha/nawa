@@ -25,8 +25,8 @@ export default defineConfig({
                             return 'vendor-react'
                         }
                         // Mapbox - large library, only needed on map page
-                        if (id.includes('/mapbox-gl/')) {
-                            return 'vendor-mapbox'
+                        if (id.includes('/maplibre-gl/')) {
+                            return 'vendor-maplibre'
                         }
                         // UI framework
                         if (id.includes('/bootstrap/') || id.includes('/bootstrap-icons/')) {
@@ -35,10 +35,6 @@ export default defineConfig({
                         // Utility libraries
                         if (id.includes('/lodash-es/') || id.includes('/fuse.js/')) {
                             return 'vendor-utils'
-                        }
-                        // Parser library
-                        if (id.includes('/antlr4/')) {
-                            return 'vendor-parser'
                         }
                     }
                 }

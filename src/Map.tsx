@@ -1,7 +1,7 @@
-import 'mapbox-gl/dist/mapbox-gl.css'
+import 'maplibre-gl/dist/maplibre-gl.css'
 
 import { useEffect, useRef, useState } from 'react'
-import mapboxgl from 'mapbox-gl'
+import maplibregl from 'maplibre-gl'
 
 import { denver } from './lib/nws.ts'
 import { getLocation } from './lib/util.ts'
@@ -11,7 +11,7 @@ import { reverse } from './lib/geocoding.ts'
 export default function Map() {
     const mapContainerRef = useRef(null)
     const [latlon, setLatLon] = useState<any>()
-    const mapRef = useRef<mapboxgl.Map>(null)
+    const mapRef = useRef<maplibregl.Map>(null)
 
     useEffect(() => {
         getLocation()
@@ -25,25 +25,25 @@ export default function Map() {
 
     useEffect(() => {
         if (mapContainerRef.current && latlon) {
-            mapboxgl.accessToken = import.meta.env.VITE_MAPBOX_TOKEN
-
-            mapRef.current = new mapboxgl.Map({
+            mapRef.current = new maplibregl.Map({
                 container: mapContainerRef.current,
-                style: 'mapbox://styles/mapbox/streets-v12',
+                style: 'https://tiles.openfreemap.org/styles/bright',
                 center: [latlon.lon, latlon.lat],
                 zoom: 9,
-                logoPosition: 'top-left'
+                attributionControl: false
             })
 
+            mapRef.current.addControl(new maplibregl.AttributionControl({ compact: true }), 'top-left')
+
             mapRef.current.addControl(
-                new mapboxgl.NavigationControl({
+                new maplibregl.NavigationControl({
                     showCompass: true
                 }),
                 'bottom-right'
             )
 
             mapRef.current.addControl(
-                new mapboxgl.GeolocateControl({
+                new maplibregl.GeolocateControl({
                     positionOptions: {
                         enableHighAccuracy: true
                     },
@@ -52,13 +52,13 @@ export default function Map() {
                 'bottom-right'
             )
 
-            const handleClick = (e: mapboxgl.MapMouseEvent) => {
+            const handleClick = (e: maplibregl.MapMouseEvent) => {
                 const { lat, lng } = e.lngLat
                 reverse(lat.toFixed(6), lng.toFixed(6)).then((result) => {
-                    new mapboxgl.Popup()
+                    new maplibregl.Popup()
                         .setLngLat(e.lngLat)
                         .setHTML(`<a href="#/forecast/${lat.toFixed(4)},${lng.toFixed(4)}">${result.display_name}</a>`)
-                        .addTo(mapRef.current as mapboxgl.Map)
+                        .addTo(mapRef.current as maplibregl.Map)
                 })
             }
 
