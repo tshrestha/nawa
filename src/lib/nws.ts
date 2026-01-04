@@ -93,5 +93,5 @@ export async function getForecast(forecastURL: string) {
         return null
     }
 
-    return (await response.json()) as ForecastResult
+    return await response.json()
 }

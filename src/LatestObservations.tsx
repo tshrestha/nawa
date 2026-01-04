@@ -1,17 +1,8 @@
-import { useEffect, useState } from 'react'
+import { createResource } from 'solid-js'
 
-import {
-    getClosestStation,
-    getLatestObservations,
-    getPoint,
-    type LatestObservations,
-    type Point,
-    type Station,
-    toF
-} from './lib/nws.ts'
+import { getClosestStation, getLatestObservations, getPoint, type Point, type Station, toF } from './lib/nws.ts'
 import { getIcon } from './lib/wicons.ts'
 import { reverseGeocodeSearch } from './lib/geocoding.ts'
-import type { Feature } from 'geojson'
 import { getTimeOfDay } from './lib/util.ts'
 import LatestObservationsPlaceholder from './LatestObservationsPlaceholder.tsx'
 
@@ -25,37 +16,26 @@ export interface LatestObservationsProps {
 
 export default function LatestObservations({ point }: LatestObservationsProps) {
     const { lat, lon } = point
-    const [forecastLocation, setForecastLocation] = useState<Feature>()
-    const [latestObservations, setLatestObservations] = useState<LatestObservations>()
-    const [pending, isPending] = useState(true)
     const timeOfDay = getTimeOfDay()
 
-    useEffect(() => {
-        isPending(true)
-        Promise.all([
-            reverseGeocodeSearch(lat, lon),
-            getPoint(lat, lon)
-                .then((p: Point) => getClosestStation(p.properties.observationStations) as Promise<Station>)
-                .then((s: Station) => getLatestObservations(s.properties.stationIdentifier))
-        ]).then(([r1, r2]: [r1: Feature, r2: LatestObservations]) => {
-            setForecastLocation(r1)
-            setLatestObservations(r2)
-            console.log(r2)
-            isPending(false)
-        })
-    }, [lat, lon])
+    const [forecastLocation] = createResource(async () => reverseGeocodeSearch(lat, lon))
+    const [latestObservations] = createResource(async () => {
+        return getPoint(lat, lon)
+            .then((p: Point) => getClosestStation(p.properties.observationStations) as Promise<Station>)
+            .then((s: Station) => getLatestObservations(s.properties.stationIdentifier))
+    })
 
-    return pending ? (
+    return forecastLocation.loading || latestObservations.loading ? (
         <LatestObservationsPlaceholder />
     ) : (
         <div className={'mt-4 mb-4 text-center'}>
-            <h1 className={'display-6'}>{forecastLocation?.properties?.name}</h1>
+            <h1 className={'display-6'}>{forecastLocation().properties.name}</h1>
             <p className={'mb-0'}>Right meow 🐱 </p>
             <div className={'d-flex justify-content-center align-items-center'}>
                 <div className='col text-end'>
                     <img
                         src={getIcon({
-                            keyword: latestObservations?.properties.textDescription as string,
+                            keyword: latestObservations().properties.textDescription,
                             isDay: timeOfDay !== 'night',
                             isNight: timeOfDay === 'night'
                         })}
@@ -64,12 +44,12 @@ export default function LatestObservations({ point }: LatestObservationsProps) {
                 </div>
                 <div className='col text-start'>
                     <h1 className={'display-1 align-middle'}>
-                        {toF(latestObservations?.properties.temperature.value as number)}º
+                        {toF(latestObservations().properties.temperature.value)}º
                     </h1>
                 </div>
             </div>
             <span className={'badge text-bg-secondary fs-6 p-2 fw-light'}>
-                {latestObservations?.properties.textDescription}
+                {latestObservations().properties.textDescription}
             </span>
         </div>
     )

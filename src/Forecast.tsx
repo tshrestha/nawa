@@ -1,11 +1,11 @@
-import { useEffect, useState } from 'react'
-import { useLocation } from 'react-router'
+import { createResource } from 'solid-js'
+import { useLocation } from '@solidjs/router'
 
-import { type ForecastResult, type Point, getForecast, getPoint } from './lib/nws.ts'
+import { getForecast, getPoint } from './lib/nws.ts'
+import { getLatLon } from './lib/util.ts'
 import LatestObservations from './LatestObservations.tsx'
 import ShortForecast from './ShortForecast.tsx'
 import DetailedForecast from './DetailedForecaset.tsx'
-import { getLatLon } from './lib/util.ts'
 import ForecastPlaceholder from './ForecastPlaceholder.tsx'
 import HomeButton from './HomeButton.tsx'
 
@@ -29,28 +29,20 @@ export default function Forecast({ point }: ForecastProps) {
         lon = latlon.lon
     }
 
-    const [forecastResult, setForecastResult] = useState<ForecastResult>()
-    const [pending, setPending] = useState(true)
-
-    useEffect(() => {
-        setPending(true)
-        getPoint(lat, lon)
-            .then((p: Point): Promise<ForecastResult> => getForecast(p.properties.forecast) as Promise<ForecastResult>)
-            .then((f: ForecastResult) => {
-                setForecastResult(f)
-                setPending(false)
-            })
-    }, [lat, lon])
+    const [forecastResult] = createResource(async () => {
+        const point = await getPoint(lat, lon)
+        return getForecast(point.properties.forecast)
+    })
 
     return (
         <>
             <LatestObservations point={{ lat, lon }} />
-            {pending ? (
+            {forecastResult.loading ? (
                 <ForecastPlaceholder />
             ) : (
                 <>
-                    <ShortForecast forecastResult={forecastResult!} />
-                    <DetailedForecast forecastResult={forecastResult} />
+                    <ShortForecast forecastResult={forecastResult()} />
+                    <DetailedForecast forecastResult={forecastResult()} />
                 </>
             )}
             {location.pathname !== '/' && (
