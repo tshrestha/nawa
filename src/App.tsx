@@ -2,8 +2,9 @@ import { lazy, Suspense } from 'react'
 import { Route, Routes } from 'react-router'
 import Loading from './Loading.tsx'
 
-const Home = lazy(() => import('./Home.tsx'))
-const Forecast = lazy(() => import('./Forecast.tsx'))
+import Home from './Home.tsx'
+import Forecast from './Forecast.tsx'
+
 const Map = lazy(() => import('./Map.tsx'))
 
 function App() {
