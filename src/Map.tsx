@@ -5,8 +5,8 @@ import maplibregl from 'maplibre-gl'
 
 import { denver } from './lib/nws.ts'
 import { getLocation } from './lib/util.ts'
-import { NavLink } from 'react-router'
 import { reverse } from './lib/geocoding.ts'
+import HomeButton from './HomeButton.tsx'
 
 export default function Map() {
     const mapContainerRef = useRef(null)
@@ -75,9 +75,7 @@ export default function Map() {
         <>
             <div id={'map'} className={'position-fixed top-0 start-0 z-2'} ref={mapContainerRef}></div>
             <div className={'position-fixed bottom-0 start-0 mb-3 mx-3 z-3'}>
-                <NavLink to={'/'} className={'btn btn-secondary btn-lg rounded-pill border-4'}>
-                    <i className={'bi bi-arrow-left'}></i>
-                </NavLink>
+                <HomeButton />
             </div>
         </>
     )

@@ -150,7 +150,7 @@ export default function LocationSearchForm() {
                     <NavLink
                         to={'/map'}
                         type={'button'}
-                        className={'btn btn-secondary btn-lg rounded-pill border-4 shadow-sm'}
+                        className={'btn btn-light btn-lg rounded-pill border-4 shadow-sm'}
                     >
                         <i className={'bi bi-map'}></i>
                     </NavLink>

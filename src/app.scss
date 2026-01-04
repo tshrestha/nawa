@@ -25,6 +25,10 @@ span.badge.text-bg-secondary {
     border-color: var(--bs-dark-border-color);
 }
 
+.btn.btn-light.btn-lg {
+    border: 3px solid rgba(0, 0, 0, 0.4) !important;
+}
+
 #map {
     height: 100svh !important;
     width: 100vw;

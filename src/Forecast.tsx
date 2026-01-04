@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { NavLink, useLocation } from 'react-router'
+import { useLocation } from 'react-router'
 
 import { type ForecastResult, type Point, getForecast, getPoint } from './lib/nws.ts'
 import LatestObservations from './LatestObservations.tsx'
@@ -7,6 +7,7 @@ import ShortForecast from './ShortForecast.tsx'
 import DetailedForecast from './DetailedForecaset.tsx'
 import { getLatLon } from './lib/util.ts'
 import ForecastPlaceholder from './lib/ForecastPlaceholder.tsx'
+import HomeButton from './HomeButton.tsx'
 
 export interface ForecastProps {
     point?: {
@@ -54,9 +55,7 @@ export default function Forecast({ point }: ForecastProps) {
             )}
             {location.pathname !== '/' && (
                 <div className={'position-fixed bottom-0 pb-4'}>
-                    <NavLink to={'/'} className={'btn btn-secondary btn-lg rounded-pill border-4'}>
-                        <i className={'bi bi-arrow-left'}></i>
-                    </NavLink>
+                    <HomeButton />
                 </div>
             )}
         </>
