@@ -1,5 +1,3 @@
-import { uniqBy } from 'lodash-es'
-
 export const savedSelectionsCollectionKey = 'nawaSavedSelections'
 
 export function getItem(key: string) {
@@ -24,7 +22,17 @@ export function addItem(collectionKey: string, item: any) {
         collection = JSON.parse(serializedCollection)
     }
 
-    collection.push(item)
-    collection = uniqBy(collection, 'id')
+    const byID = (c: any) => c.id === item.id
+    const index = collection.findIndex(byID)
+    if (index === -1) {
+        collection.push(item)
+    } else {
+        collection.splice(index, 1)
+        collection.push(item)
+    }
+
+    if (collection.length > 10) {
+        collection.shift()
+    }
     localStorage.setItem(collectionKey, JSON.stringify(collection))
 }
