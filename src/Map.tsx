@@ -36,6 +36,13 @@ export default function Map() {
             })
 
             mapRef.current.addControl(
+                new mapboxgl.NavigationControl({
+                    showCompass: true
+                }),
+                'bottom-right'
+            )
+
+            mapRef.current.addControl(
                 new mapboxgl.GeolocateControl({
                     positionOptions: {
                         enableHighAccuracy: true
@@ -43,13 +50,6 @@ export default function Map() {
                     showAccuracyCircle: true
                 }),
                 'bottom-right'
-            )
-
-            mapRef.current.addControl(
-                new mapboxgl.NavigationControl({
-                    showCompass: true
-                }),
-                'top-right'
             )
 
             const handleClick = (e: mapboxgl.MapMouseEvent) => {

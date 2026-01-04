@@ -6,6 +6,7 @@ import LatestObservations from './LatestObservations.tsx'
 import ShortForecast from './ShortForecast.tsx'
 import DetailedForecast from './DetailedForecaset.tsx'
 import { getLatLon } from './lib/util.ts'
+import ForecastPlaceholder from './lib/ForecastPlaceholder.tsx'
 
 export interface ForecastProps {
     point?: {
@@ -44,7 +45,7 @@ export default function Forecast({ point }: ForecastProps) {
         <>
             <LatestObservations point={{ lat, lon }} />
             {pending ? (
-                <></>
+                <ForecastPlaceholder />
             ) : (
                 <>
                     <ShortForecast forecastResult={forecastResult!} />

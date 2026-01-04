@@ -13,6 +13,7 @@ import { getIcon } from './lib/wicons.ts'
 import { reverseGeocodeSearch } from './lib/geocoding.ts'
 import type { Feature } from 'geojson'
 import { getTimeOfDay } from './lib/util.ts'
+import LatestObservationsPlaceholder from './LatestObservationsPlaceholder.tsx'
 
 export interface LatestObservationsProps {
     point: {
@@ -45,17 +46,7 @@ export default function LatestObservations({ point }: LatestObservationsProps) {
     }, [lat, lon])
 
     return pending ? (
-        <div className={'mt-4 mb-4 text-center'}>
-            <h1 className={'display-6 placeholder-glow'}></h1>
-            <p className={'mb-0 placeholder'}></p>
-            <div className={'d-flex justify-content-center align-items-center'}>
-                <div className='col text-end placeholder-lg'></div>
-                <div className='col text-start'>
-                    <h1 className={'display-1 align-middle placeholder-lg'}></h1>
-                </div>
-            </div>
-            <span className={'badge text-bg-secondary fs-6 p-2 fw-light placeholder'}></span>
-        </div>
+        <LatestObservationsPlaceholder />
     ) : (
         <div className={'mt-4 mb-4 text-center'}>
             <h1 className={'display-6'}>{forecastLocation?.properties?.name}</h1>
