@@ -40,7 +40,6 @@ export default function LatestObservations({ point }: LatestObservationsProps) {
         ]).then(([r1, r2]: [r1: Feature, r2: LatestObservations]) => {
             setForecastLocation(r1)
             setLatestObservations(r2)
-            console.log(r2)
             isPending(false)
         })
     }, [lat, lon])

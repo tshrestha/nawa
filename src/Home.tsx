@@ -1,13 +1,12 @@
+import { useEffect, useState } from 'react'
+
 import { denver } from './lib/nws.ts'
-import { lazy, useEffect, useState } from 'react'
 import { getLocation } from './lib/util.ts'
 import LocationSearchForm from './LocationSearchForm.tsx'
-
-const Forecast = lazy(() => import('./Forecast.tsx'))
+import Forecast from './Forecast.tsx'
 
 export default function Home() {
-    const [latlon, setLatLon] = useState<{ lat: string; lon: string } | null>(null)
-    const [locationResolved, setLocationResolved] = useState(false)
+    const [latlon, setLatLon] = useState<{ lat: string; lon: string }>({ lat: denver.lat, lon: denver.lon })
 
     useEffect(() => {
         getLocation()
@@ -19,20 +18,13 @@ export default function Home() {
                 })
             })
             .catch(() => {
-                setLatLon({ lat: denver.lat, lon: denver.lon })
-            })
-            .finally(() => {
-                setLocationResolved(true)
+                console.log('location not allowed, using default location', denver)
             })
     }, [])
 
-    if (!locationResolved) {
-        return <div className='text-center mt-4'>Loading...</div>
-    }
-
     return (
         <>
-            <Forecast point={{ lat: latlon!.lat, lon: latlon!.lon }} />
+            <Forecast point={{ lat: latlon.lat, lon: latlon.lon }} />
             <LocationSearchForm />
         </>
     )
