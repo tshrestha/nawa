@@ -53,7 +53,9 @@ export function toF(temp: number) {
 }
 
 export async function getPoint(lat: string, lon: string) {
-    const response = await fetch(`${weatherURL}/points/${lat},${lon}`, { headers })
+    const response = await fetch(`${weatherURL}/points/${parseFloat(lat).toFixed(4)},${parseFloat(lon).toFixed(4)}`, {
+        headers
+    })
     if (!response.ok) {
         console.error(`failed to fetch point ${lat},${lon}`)
         return null
