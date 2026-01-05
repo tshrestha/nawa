@@ -7,18 +7,18 @@ import snowflakeIcon from './assets/weather-icons-master/production/fill/all/sno
 
 export default function DetailedForecast({ forecastResult }: { forecastResult?: ForecastResult }) {
     return (
-        <div className='card rounded rounded-4 shadow-sm mt-4 mb-4'>
-            <div className='card-header'>Detailed Forecast</div>
-            <div className='list-group list-group-flush rounded-4'>
+        <div class='card rounded rounded-4 shadow-sm mt-4 mb-4'>
+            <div class='card-header'>Detailed Forecast</div>
+            <div class='list-group list-group-flush rounded-4'>
                 {forecastResult?.properties.periods.map((p: Record<string, string>) => {
                     const precipType = getPrecipType(p.detailedForecast)
                     return (
-                        <div key={p.startTime} className={'list-group-item'}>
-                            <div className={'d-flex justify-content-between align-items-center mb-3'}>
-                                <div className={'col-2 fw-medium'}>
+                        <div class={'list-group-item'}>
+                            <div class={'d-flex justify-content-between align-items-center mb-3'}>
+                                <div class={'col-2 fw-medium'}>
                                     {`${new Date(p.startTime).toLocaleDateString('en-US', { weekday: 'short' })}${p.isDaytime ? '' : ' night'}`}
                                 </div>
-                                <div className={'col-1 text-start'}>
+                                <div class={'col-1 text-start'}>
                                     <img
                                         src={getIcon({
                                             keyword: p.shortForecast,
@@ -26,30 +26,30 @@ export default function DetailedForecast({ forecastResult }: { forecastResult?: 
                                             isNight: !p.isDaytime
                                         })}
                                         alt={p.shortForecast}
-                                        className='img-fluid'
+                                        class='img-fluid'
                                     />
                                 </div>
-                                <div className={'col-1 text-end ms-4'}>
-                                    <img src={windIcon} alt='wind icon' className='img-fluid' />
+                                <div class={'col-1 text-end ms-4'}>
+                                    <img src={windIcon} alt='wind icon' class='img-fluid' />
                                 </div>
-                                <div className={'col-3 text-start'}>
+                                <div class={'col-3 text-start'}>
                                     <small>{p.windSpeed.replace('to', '-')}</small>
                                 </div>
-                                <div className={'col-1 text-end'}>
+                                <div class={'col-1 text-end'}>
                                     {precipType === 'snow' && (
-                                        <img src={snowflakeIcon} alt='precipitation' className='img-fluid' />
+                                        <img src={snowflakeIcon} alt='precipitation' class='img-fluid' />
                                     )}
                                     {precipType === 'rain' && (
-                                        <img src={raindropIcon} alt='precipitation' className='img-fluid' />
+                                        <img src={raindropIcon} alt='precipitation' class='img-fluid' />
                                     )}
                                 </div>
-                                <div className={'col-2 text-start'}>
+                                <div class={'col-2 text-start'}>
                                     <small>{
                                         // @ts-ignore
                                         `${p.probabilityOfPrecipitation['value']}%`
                                     }</small>
                                 </div>
-                                <div className={'col-auto text-end fw-medium'}>{p.temperature}º</div>
+                                <div class={'col-auto text-end fw-medium'}>{p.temperature}º</div>
                             </div>
                             <p>{p.detailedForecast}</p>
                         </div>

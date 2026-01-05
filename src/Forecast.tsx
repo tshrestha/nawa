@@ -1,13 +1,14 @@
-import { createResource } from 'solid-js'
-import { useLocation } from '@solidjs/router'
+import { Show, Suspense } from 'solid-js'
+import { createAsync, query, type RouteSectionProps, useLocation, useParams } from '@solidjs/router'
 
 import { getForecast, getPoint } from './lib/nws.ts'
-import { getLatLon } from './lib/util.ts'
+
 import LatestObservations from './LatestObservations.tsx'
 import ShortForecast from './ShortForecast.tsx'
 import DetailedForecast from './DetailedForecaset.tsx'
 import ForecastPlaceholder from './ForecastPlaceholder.tsx'
 import HomeButton from './HomeButton.tsx'
+import LatestObservationsPlaceholder from './LatestObservationsPlaceholder.tsx'
 
 export interface ForecastProps {
     point?: {
@@ -16,40 +17,46 @@ export interface ForecastProps {
     }
 }
 
-export default function Forecast({ point }: ForecastProps) {
+const getData = query(async (lat, lon) => {
+    const point = await getPoint(lat, lon)
+    const forecast = await getForecast(point.properties.forecast)
+    return { point, forecast }
+}, 'forecast')
+
+export default function Forecast(props: ForecastProps | RouteSectionProps) {
     const location = useLocation()
+    const params = useParams()
     let lat, lon
 
-    if (point) {
-        lat = point.lat
-        lon = point.lon
+    if ((props as ForecastProps).point) {
+        lat = (props as ForecastProps).point!.lat
+        lon = (props as ForecastProps).point!.lon
     } else {
-        const latlon = getLatLon(location.pathname)
-        lat = latlon.lat
-        lon = latlon.lon
+        const point = params.point?.split(',')
+        lat = point![0]
+        lon = point![1]
     }
 
-    const [forecastResult] = createResource(async () => {
-        const point = await getPoint(lat, lon)
-        return getForecast(point.properties.forecast)
-    })
+    const data = createAsync(() => getData(lat, lon))
 
     return (
         <>
-            <LatestObservations point={{ lat, lon }} />
-            {forecastResult.loading ? (
-                <ForecastPlaceholder />
-            ) : (
-                <>
-                    <ShortForecast forecastResult={forecastResult()} />
-                    <DetailedForecast forecastResult={forecastResult()} />
-                </>
-            )}
-            {location.pathname !== '/' && (
-                <div className={'position-fixed bottom-0 pb-4'}>
+            <Suspense fallback={<LatestObservationsPlaceholder />}>
+                <Show when={data()}>
+                    <LatestObservations point={data()!.point} />
+                </Show>
+            </Suspense>
+            <Suspense fallback={<ForecastPlaceholder />}>
+                <Show when={data()}>
+                    <ShortForecast forecastResult={data()!.forecast} />
+                    <DetailedForecast forecastResult={data()!.forecast} />
+                </Show>
+            </Suspense>
+            <Show when={location.pathname !== '/'}>
+                <div class={'position-fixed bottom-0 pb-4'}>
                     <HomeButton />
                 </div>
-            )}
+            </Show>
         </>
     )
 }

@@ -1,18 +1,11 @@
 import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react'
+import solidPlugin from 'vite-plugin-solid'
 
 export default defineConfig({
-    plugins: [react()],
+    plugins: [solidPlugin()],
     base: '/condies',
     server: {
         port: 3000
-    },
-    css: {
-        preprocessorOptions: {
-            scss: {
-                silenceDeprecations: ['import', 'if-function', 'global-builtin', 'color-functions']
-            }
-        }
     },
     build: {
         rollupOptions: {
@@ -20,8 +13,12 @@ export default defineConfig({
                 manualChunks(id) {
                     if (id.includes('node_modules')) {
                         // React core - frequently cached, loaded on every page
-                        if (id.includes('/react/') || id.includes('/react-dom/') || id.includes('/react-router/')) {
-                            return 'vendor-react'
+                        if (
+                            id.includes('/solid-js/') ||
+                            id.includes('/@solidjs/router/') ||
+                            id.includes('/@solid-primitives/scheduled/')
+                        ) {
+                            return 'vendor-solid'
                         }
                         // Mapbox - large library, only needed on map page
                         if (id.includes('/maplibre-gl/')) {
@@ -30,10 +27,6 @@ export default defineConfig({
                         // UI framework
                         if (id.includes('/bootstrap/') || id.includes('/bootstrap-icons/')) {
                             return 'vendor-ui'
-                        }
-                        // Utility libraries
-                        if (id.includes('/lodash-es/') || id.includes('/fuse.js/')) {
-                            return 'vendor-utils'
                         }
                     }
                 }

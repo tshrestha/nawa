@@ -25,7 +25,7 @@ export async function geocodeSearch(query: string): Promise<Partial<FeatureColle
 }
 
 export async function reverseGeocodeSearch(lat: string, lon: string) {
-    const response = await fetch(`${reverseGeocodeURL}?lat=${lat}&lon=${lon}`, {
+    const response = await fetch(`${reverseGeocodeURL}?lat=${lat.toString()}&lon=${lon.toString()}`, {
         method: 'GET',
         headers: {
             'X-Nawa-Token': import.meta.env.VITE_NAWA_TOKEN

@@ -1,7 +1,7 @@
-import { lazy, Suspense } from 'react'
-import { Route, Routes } from 'react-router'
-import Loading from './Loading.tsx'
+import { lazy, Suspense } from 'solid-js'
+import { Route } from '@solidjs/router'
 
+import Loading from './Loading.tsx'
 import Home from './Home.tsx'
 import Forecast from './Forecast.tsx'
 
@@ -10,11 +10,9 @@ const Map = lazy(() => import('./Map.tsx'))
 function App() {
     return (
         <Suspense fallback={<Loading />}>
-            <Routes>
-                <Route path={'/'} element={<Home />}></Route>
-                <Route path={'/map'} element={<Map />} />
-                <Route path={'/forecast/:point'} element={<Forecast />} />
-            </Routes>
+            <Route path={'/'} component={Home} />
+            <Route path={'/map'} component={Map} />
+            <Route path={'/forecast/:point'} component={Forecast} />
         </Suspense>
     )
 }

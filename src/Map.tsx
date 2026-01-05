@@ -1,48 +1,54 @@
 import 'maplibre-gl/dist/maplibre-gl.css'
 
-import { useEffect, useRef, useState } from 'react'
 import maplibregl from 'maplibre-gl'
+import { createEffect } from 'solid-js'
+import { createAsync, query } from '@solidjs/router'
 
 import { denver } from './lib/nws.ts'
 import { getLocation } from './lib/util.ts'
 import { reverse } from './lib/geocoding.ts'
+
 import HomeButton from './HomeButton.tsx'
 
+const getData = query(async () => {
+    try {
+        const {
+            // @ts-ignore
+            coords: { latitude, longitude }
+        } = await getLocation()
+        return { lat: latitude.toFixed(4), lon: longitude.toFixed(4) }
+    } catch (e) {
+        console.error((e as Error).message)
+        return { lat: denver.lat, lon: denver.lon }
+    }
+}, 'mapGeoLocation')
+
 export default function Map() {
-    const mapContainerRef = useRef(null)
-    const [latlon, setLatLon] = useState<any>()
-    const mapRef = useRef<maplibregl.Map>(null)
+    let mapContainerRef!: HTMLDivElement
+    let mapRef!: maplibregl.Map
 
-    useEffect(() => {
-        getLocation()
-            .then((geolocation: any) => {
-                setLatLon({ lat: geolocation.coords.latitude.toFixed(4), lon: geolocation.coords.longitude.toFixed(4) })
-            })
-            .catch(() => {
-                setLatLon({ lat: denver.lat, lon: denver.lon })
-            })
-    }, [])
+    const latlon = createAsync(() => getData())
 
-    useEffect(() => {
-        if (mapContainerRef.current && latlon) {
-            mapRef.current = new maplibregl.Map({
-                container: mapContainerRef.current,
+    createEffect(() => {
+        if (mapContainerRef.isConnected && latlon()) {
+            mapRef = new maplibregl.Map({
+                container: mapContainerRef,
                 style: 'https://tiles.openfreemap.org/styles/bright',
-                center: [latlon.lon, latlon.lat],
+                center: [latlon()!.lon, latlon()!.lat],
                 zoom: 9,
                 attributionControl: false
             })
 
-            mapRef.current.addControl(new maplibregl.AttributionControl({ compact: true }), 'top-left')
+            mapRef.addControl(new maplibregl.AttributionControl({ compact: true }), 'top-left')
 
-            mapRef.current.addControl(
+            mapRef.addControl(
                 new maplibregl.NavigationControl({
                     showCompass: true
                 }),
                 'bottom-right'
             )
 
-            mapRef.current.addControl(
+            mapRef.addControl(
                 new maplibregl.GeolocateControl({
                     positionOptions: {
                         enableHighAccuracy: true
@@ -58,23 +64,23 @@ export default function Map() {
                     new maplibregl.Popup()
                         .setLngLat(e.lngLat)
                         .setHTML(`<a href="#/forecast/${lat.toFixed(4)},${lng.toFixed(4)}">${result.display_name}</a>`)
-                        .addTo(mapRef.current as maplibregl.Map)
+                        .addTo(mapRef as maplibregl.Map)
                 })
             }
 
-            mapRef.current.on('click', handleClick)
+            mapRef.on('click', handleClick)
 
             return () => {
-                mapRef.current?.off('click', handleClick)
-                mapRef.current?.remove()
+                mapRef?.off('click', handleClick)
+                mapRef?.remove()
             }
         }
     }, [latlon])
 
     return (
         <>
-            <div id={'map'} className={'position-fixed top-0 start-0 z-2'} ref={mapContainerRef}></div>
-            <div className={'position-fixed bottom-0 start-0 mb-3 mx-3 z-3'}>
+            <div id={'map'} class={'position-fixed top-0 start-0 z-2'} ref={mapContainerRef}></div>
+            <div class={'position-fixed bottom-0 start-0 mb-3 mx-3 z-3'}>
                 <HomeButton />
             </div>
         </>

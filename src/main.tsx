@@ -1,30 +1,30 @@
 import 'bootstrap/dist/css/bootstrap.min.css'
 import 'bootstrap-icons/font/bootstrap-icons.min.css'
-import './app.scss'
+import './app.css'
 
-import { lazy, StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
+import { render } from 'solid-js/web'
+import { HashRouter } from '@solidjs/router'
 
-import { HashRouter } from 'react-router'
 import { getTimeOfDay } from './lib/util.ts'
-
-const App = lazy(() => import('./App.tsx'))
+import App from './App.tsx'
 
 const timeofDay = getTimeOfDay()
-document.body.classList.remove('morning')
-document.body.classList.remove('day')
-document.body.classList.remove('evening')
-document.body.classList.remove('night')
-document.body.classList.add(timeofDay)
+const body = document.body
+body.classList.remove('morning')
+body.classList.remove('day')
+body.classList.remove('evening')
+body.classList.remove('night')
+body.classList.add(timeofDay)
 
 if (timeofDay === 'night') {
-    document.body.setAttribute('data-bs-theme', 'dark')
+    body.setAttribute('data-bs-theme', 'dark')
 }
 
-createRoot(document.getElementById('root')!).render(
-    <StrictMode>
+render(
+    () => (
         <HashRouter>
             <App />
         </HashRouter>
-    </StrictMode>
+    ),
+    document.getElementById('root')!
 )
