@@ -58,7 +58,7 @@ export default function LocationSearchForm() {
         }
     }, [searchResults()])
 
-    const onChange = () => {
+    const onInput = () => {
         if (searchInputRef?.isConnected) {
             const query = searchInputRef.value
             if (query && query.length > 2) {
@@ -140,7 +140,7 @@ export default function LocationSearchForm() {
                         placeholder='Search for a city or place'
                         aria-label='Location'
                         aria-describedby='search'
-                        onChange={onChange}
+                        onInput={onInput}
                         onKeyDown={onKeyDown}
                         onFocus={onFocus}
                         onBlur={onBlur}
