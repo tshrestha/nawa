@@ -65,7 +65,7 @@ export async function getPoint(lat: string, lon: string) {
 }
 
 export async function getClosestStation(stationsURL: string) {
-    const response = await fetch(stationsURL, { headers })
+    const response = await fetch(`${stationsURL}?limit=1`, { headers })
     if (!response.ok) {
         console.error('failed to get stations')
         return null
