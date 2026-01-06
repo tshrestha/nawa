@@ -115,7 +115,7 @@ export default function LocationSearchForm() {
                 class={`list-group list-group-flush rounded rounded-3 position-absolute start-0 bottom-100 pb-1 w-100 shadow-sm ${searchResults()?.length && searchResultsVisible() ? '' : 'd-none'}`}
                 style={{ 'z-index': 1000 }}
             >
-                <For each={searchResults()}>
+                <For each={searchResults()?.reverse()}>
                     {(feature, i) => (
                         <a
                             class={`list-group-item list-group-item-action search-result ${i() === resultNav().selectionOffset ? 'active' : ''}`}

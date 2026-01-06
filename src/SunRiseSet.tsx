@@ -22,7 +22,6 @@ const getData = query(async (lat: string, lon: string) => {
     }
 
     const result: Feature = await response.json()
-    console.log(result)
     const { sundata } = result.properties?.data
 
     const [sunriseHours, sunriseMinutes] = sundata
