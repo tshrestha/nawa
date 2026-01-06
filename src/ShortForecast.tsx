@@ -4,7 +4,7 @@ import windIcon from './assets/weather-icons-master/production/fill/all/wind.svg
 
 export default function ShortForecast({ forecastResult }: { forecastResult: ForecastResult }) {
     return (
-        <div class='list-group rounded-4 shadow-sm mt-4 mb-4'>
+        <div class='list-group rounded-4 shadow-sm mb-4'>
             {forecastResult?.properties.periods.map((p, i) => (
                 <div class='list-group-item d-flex justify-content-between align-items-center'>
                     {i <= 1 && <div class={'col-3 fw-medium'}>{p.name}</div>}

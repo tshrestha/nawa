@@ -9,6 +9,7 @@ import DetailedForecast from './DetailedForecaset.tsx'
 import ForecastPlaceholder from './ForecastPlaceholder.tsx'
 import HomeButton from './HomeButton.tsx'
 import LatestObservationsPlaceholder from './LatestObservationsPlaceholder.tsx'
+import SunRiseSet from './SunRiseSet.tsx'
 
 export interface ForecastProps {
     point?: {
@@ -46,6 +47,7 @@ export default function Forecast(props: ForecastProps | RouteSectionProps) {
                     <LatestObservations point={data()!.point} />
                 </Show>
             </Suspense>
+            <SunRiseSet lat={lat} lon={lon} />
             <Suspense fallback={<ForecastPlaceholder />}>
                 <Show when={data()}>
                     <ShortForecast forecastResult={data()!.forecast} />
