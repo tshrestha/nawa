@@ -47,7 +47,7 @@ export default function SunRiseSet({ lat, lon }: Record<string, string>) {
     return (
         <Suspense fallback={<SunRiseSetPlaceholder />}>
             <Show when={data()}>
-                <div class={'d-flex justify-content-between align-items-center w-100 fs-6 fw-lighter'}>
+                <div class={'d-flex justify-content-between align-items-center w-100 fs-6 fw-light'}>
                     <div class={'d-flex justify-content-start align-items-center col-6'}>
                         <div class={'col-2'}>
                             <img src={sunriseIcon} alt={'sunrise icon'} class={'img-fluid'}></img>
