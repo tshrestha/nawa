@@ -36,8 +36,8 @@ const getData = query(async (lat: string, lon: string) => {
     sunsetDate.setMinutes(parseInt(sunsetMinutes, 10))
 
     return {
-        sunrise: `${sunriseDate.getHours()}:${sunriseDate.getMinutes()} AM`,
-        sunset: `${sunsetDate.getHours() - 12}:${sunsetDate.getMinutes()} PM`
+        sunrise: `${sunriseDate.getHours()}:${sunriseDate.getMinutes() < 10 ? '0' + sunriseDate.getMinutes() : sunriseDate.getMinutes()} AM`,
+        sunset: `${sunsetDate.getHours() - 12}:${sunsetDate.getMinutes() < 10 ? '0' + sunsetDate.getMinutes() : sunsetDate.getMinutes()} PM`
     }
 }, 'sunriseset')
 
