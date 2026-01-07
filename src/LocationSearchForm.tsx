@@ -42,7 +42,7 @@ export default function LocationSearchForm() {
     const debouncedSearch = debounce((query: string) => {
         geocodeSearch(query).then(({ features }) => {
             setItem(query, features)
-            setSearchResults(features)
+            setSearchResults(features?.reverse())
         })
     }, 300)
 
@@ -64,7 +64,7 @@ export default function LocationSearchForm() {
             if (query && query.length > 2) {
                 const cached = getItem(query)
                 if (cached) {
-                    setSearchResults(cached)
+                    setSearchResults(cached.reverse())
                 } else {
                     debouncedSearch(query)
                 }
@@ -115,7 +115,7 @@ export default function LocationSearchForm() {
                 class={`list-group list-group-flush rounded rounded-3 position-absolute start-0 bottom-100 pb-1 w-100 shadow-sm ${searchResults()?.length && searchResultsVisible() ? '' : 'd-none'}`}
                 style={{ 'z-index': 1000 }}
             >
-                <For each={searchResults()?.reverse()}>
+                <For each={searchResults()}>
                     {(feature, i) => (
                         <a
                             class={`list-group-item list-group-item-action search-result ${i() === resultNav().selectionOffset ? 'active' : ''}`}

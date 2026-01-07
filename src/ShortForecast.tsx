@@ -1,31 +1,71 @@
-import { Show } from 'solid-js'
+import { Match, Switch } from 'solid-js'
 
 import { getIcon } from './lib/wicons.ts'
 import type { ForecastResult } from './lib/nws.ts'
 import windIcon from './assets/weather-icons-master/production/fill/all/wind.svg'
 
-function isPrimo(condies: Record<string, string | number | boolean>) {
-    const { shortForecast, isDaytime, windSpeed, temperature } = condies
+function tooWindy(windSpeed: string, threshold = 15) {
+    const minMaxWind = (windSpeed as string).match(/(\d)+/g)
+    if (minMaxWind && minMaxWind.length) {
+        if (minMaxWind.length === 1 && parseInt(minMaxWind[0], 10) > threshold) {
+            return true
+        }
+
+        if (parseInt(minMaxWind[1], 10) > threshold) {
+            return true
+        }
+    }
+
+    return false
+}
+
+function isPrimo(condies: Record<string, string | number | boolean | Record<string, string | number>>) {
+    const { shortForecast, isDaytime, windSpeed, temperature, probabilityOfPrecipitation } = condies
     if (!isDaytime) {
         return false
     }
-    if ((temperature as number) < 52 || (temperature as number) > 75) {
+    if ((probabilityOfPrecipitation as Record<string, number>).value > 10) {
         return false
     }
-
-    const minMaxWind = (windSpeed as string).match(/(\d)+/g)
-    if (minMaxWind && minMaxWind.length) {
-        if (minMaxWind.length === 1 && parseInt(minMaxWind[0], 10) > 15) {
-            return false
-        }
-
-        if (parseInt(minMaxWind[1], 10) > 15) {
-            return false
-        }
+    if ((temperature as number) < 55 || (temperature as number) > 75) {
+        return false
+    }
+    if (tooWindy(windSpeed as string)) {
+        return false
     }
 
     const p = /(mostly\s)?sunny/g
     return p.test((shortForecast as string).toLowerCase())
+}
+
+function isPowDay(
+    condies: Record<string, string | number | boolean | Record<string, string | number>>,
+    ignoreIsDaytime = false,
+    ignoreTemp = false
+) {
+    const { detailedForecast, isDaytime, windSpeed, temperature, probabilityOfPrecipitation } = condies
+    const snowForecastRegex = /(snow)(\saccumulation)?/gi
+    const snowDepthRegex = /(\d+)\s(inches)/
+
+    if (!isDaytime && !ignoreIsDaytime) {
+        return false
+    }
+    if ((temperature as number) > 32 && !ignoreTemp) {
+        return false
+    }
+    if (tooWindy(windSpeed as string, 20)) {
+        return false
+    }
+    if ((probabilityOfPrecipitation as Record<string, number>).value < 70) {
+        return false
+    }
+    if (snowForecastRegex.test(detailedForecast as string)) {
+        const match = (detailedForecast as string).match(snowDepthRegex)
+        if (!match) {
+            return false
+        }
+        return parseInt(match[1], 10) >= 6
+    }
 }
 
 export default function ShortForecast({ forecastResult }: { forecastResult: ForecastResult }) {
@@ -55,13 +95,24 @@ export default function ShortForecast({ forecastResult }: { forecastResult: Fore
                         </div>
                         <div class={'col-auto text-end fw-medium'}>{p.temperature}º</div>
                     </div>
-                    <Show when={isPrimo(p)}>
-                        <div class={'d-flex justify-content-center my-2'}>
-                            <span class='badge rounded-pill text-bg-warning fw-bolder text-center py-2 px-3'>
-                                <i>️PRIMO CONDIES!!!</i>
-                            </span>
-                        </div>
-                    </Show>
+                    <Switch>
+                        <Match when={isPrimo(p)}>
+                            <div class={'d-flex justify-content-center align-items-center my-2'}>
+                                <span class='badge rounded-pill text-bg-warning fw-bolder text-center py-2 px-3'>
+                                    <i>️PRIMO CONDIES!</i>
+                                </span>
+                            </div>
+                        </Match>
+                        <Match when={isPowDay(p)}>
+                            <div class={'d-flex justify-content-center align-items-center'}>
+                                <span class={'fs-2 mx-3'}>🏂</span>
+                                <span class='badge rounded-pill text-bg-primary fw-bolder text-center py-2 px-3'>
+                                    <i>POW DAY!</i>
+                                </span>
+                                <span class={'fs-2 mx-3'}>⛷️</span>
+                            </div>
+                        </Match>
+                    </Switch>
                 </div>
             ))}
         </div>
