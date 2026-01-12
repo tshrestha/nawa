@@ -1,7 +1,7 @@
 import { Match, Switch } from 'solid-js'
 
 import { getIcon } from './lib/wicons.ts'
-import type { ForecastResult } from './lib/nws.ts'
+import type { ForecastResult, Period } from './lib/nws.ts'
 import windIcon from './assets/weather-icons-master/production/fill/all/wind.svg'
 
 function tooWindy(windSpeed: string, threshold = 15) {
@@ -19,30 +19,26 @@ function tooWindy(windSpeed: string, threshold = 15) {
     return false
 }
 
-function isPrimo(condies: Record<string, string | number | boolean | Record<string, string | number>>) {
+function isPrimo(condies: Period) {
     const { shortForecast, isDaytime, windSpeed, temperature, probabilityOfPrecipitation } = condies
     if (!isDaytime) {
         return false
     }
-    if ((probabilityOfPrecipitation as Record<string, number>).value > 10) {
+    if (probabilityOfPrecipitation.value > 10) {
         return false
     }
-    if ((temperature as number) < 55 || (temperature as number) > 75) {
+    if (temperature < 55 || temperature > 75) {
         return false
     }
-    if (tooWindy(windSpeed as string)) {
+    if (tooWindy(windSpeed)) {
         return false
     }
 
     const p = /(mostly\s)?sunny/g
-    return p.test((shortForecast as string).toLowerCase())
+    return p.test(shortForecast.toLowerCase())
 }
 
-function isPowDay(
-    condies: Record<string, string | number | boolean | Record<string, string | number>>,
-    ignoreIsDaytime = false,
-    ignoreTemp = false
-) {
+function isPowDay(condies: Period, ignoreIsDaytime = false, ignoreTemp = false) {
     const { detailedForecast, isDaytime, windSpeed, temperature, probabilityOfPrecipitation } = condies
     const snowForecastRegex = /(snow)(\saccumulation)?/gi
     const snowDepthRegex = /(\d+)\s(inches)/
@@ -50,17 +46,17 @@ function isPowDay(
     if (!isDaytime && !ignoreIsDaytime) {
         return false
     }
-    if ((temperature as number) > 32 && !ignoreTemp) {
+    if (temperature > 32 && !ignoreTemp) {
         return false
     }
-    if (tooWindy(windSpeed as string, 20)) {
+    if (tooWindy(windSpeed, 20)) {
         return false
     }
-    if ((probabilityOfPrecipitation as Record<string, number>).value < 70) {
+    if (probabilityOfPrecipitation.value < 70) {
         return false
     }
-    if (snowForecastRegex.test(detailedForecast as string)) {
-        const match = (detailedForecast as string).match(snowDepthRegex)
+    if (snowForecastRegex.test(detailedForecast)) {
+        const match = detailedForecast.match(snowDepthRegex)
         if (!match) {
             return false
         }

@@ -50,15 +50,22 @@ export default function SunRiseSet({ lat, lon }: Record<string, string>) {
                 <div class={'d-flex justify-content-between align-items-center w-100 fs-6 fw-light mb-2'}>
                     <div class={'d-flex justify-content-start align-items-center col-6'}>
                         <div class={'col-2'}>
-                            <img src={sunriseIcon} alt={'sunrise icon'} class={'img-fluid img-thumbnail rounded-circle'}></img>
+                            <img
+                                src={sunriseIcon}
+                                alt={'sunrise icon'}
+                                class={'img-fluid img-thumbnail rounded-circle'}
+                            ></img>
                         </div>
                         <div class={'col-auto ms-2'}>{data()!.sunrise}</div>
                     </div>
                     <div class={'d-flex justify-content-end align-items-center col-6'}>
                         <div class={'col-auto me-2'}>{data()?.sunset}</div>
                         <div class={'col-2 text-end'}>
-                            <img src={sunsetIcon} alt={'sunset icon'}
-                                 class={'img-fluid img-thumbnail rounded-circle'}></img>
+                            <img
+                                src={sunsetIcon}
+                                alt={'sunset icon'}
+                                class={'img-fluid img-thumbnail rounded-circle'}
+                            ></img>
                         </div>
                     </div>
                 </div>

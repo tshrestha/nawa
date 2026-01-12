@@ -5,9 +5,70 @@ export const denver = {
     lon: '-105.019559'
 }
 
+/**
+ * {
+ *     "number": 1,
+ *     "name": "",
+ *     "startTime": "2026-01-11T09:00:00-07:00",
+ *     "endTime": "2026-01-11T10:00:00-07:00",
+ *     "isDaytime": true,
+ *     "temperature": 35,
+ *     "temperatureUnit": "F",
+ *     "temperatureTrend": null,
+ *     "probabilityOfPrecipitation": {
+ *         "unitCode": "wmoUnit:percent",
+ *         "value": 0
+ *     },
+ *     "dewpoint": {
+ *         "unitCode": "wmoUnit:degC",
+ *         "value": -8.333333333333334
+ *     },
+ *     "relativeHumidity": {
+ *         "unitCode": "wmoUnit:percent",
+ *         "value": 47
+ *     },
+ *     "windSpeed": "6 mph",
+ *     "windDirection": "SSW",
+ *     "icon": "https://api.weather.gov/icons/land/day/sct?size=small",
+ *     "shortForecast": "Mostly Sunny",
+ *     "detailedForecast": ""
+ * }
+ */
+export interface Period {
+    number: number
+    name: string
+    startTime: string
+    endTime: string
+    isDaytime: boolean
+    temperature: number
+    probabilityOfPrecipitation: {
+        unitCode: string
+        value: number
+    }
+    dewpoint: {
+        unitCode: string
+        value: number
+    }
+    relativeHumidity: {
+        unitCode: string
+        value: number
+    }
+    windSpeed: string
+    windDirection: string
+    shortForecast: string
+    detailedForecast: string
+    hourString: string
+}
+
+export interface HourlyForecast {
+    minTemp: number
+    maxTemp: number
+    periods: Period[]
+}
+
 export interface ForecastResult {
     properties: {
-        periods: Record<string, string>[]
+        periods: Period[]
     }
 }
 

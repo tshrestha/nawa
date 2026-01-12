@@ -29,7 +29,7 @@ export default function LatestObservations({ point }: any) {
     return (
         <Suspense fallback={<LatestObservationsPlaceholder />}>
             <Show when={data()}>
-                <div class={'mt-4 mb-4 text-center'}>
+                <div class={'mt-4 mb-4 text-center latest-observations'}>
                     <h1 class={'display-6'}>{data()!.observationLocation.properties.name}</h1>
                     <p class={'mb-0'}>Right meow 🐱 </p>
                     <div class={'d-flex justify-content-center align-items-center'}>

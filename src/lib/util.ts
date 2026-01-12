@@ -1,3 +1,5 @@
+import type { Period } from './nws.ts'
+
 export function getLatLon(path: string) {
     const segments = path.split('/')
     const point = segments.pop() as string
@@ -41,4 +43,10 @@ export function getTimeOfDay() {
     }
 
     return 'night'
+}
+
+export function getMinMaxTemp(forecastPeriods: Period[]) {
+    const min = forecastPeriods.sort((a, b) => a.temperature - b.temperature)[0]
+    const max = forecastPeriods.sort((a, b) => b.temperature - a.temperature)[0]
+    return [min.temperature, max.temperature]
 }

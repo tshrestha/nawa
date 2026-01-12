@@ -1,15 +1,17 @@
 import { Show, Suspense } from 'solid-js'
 import { createAsync, query, type RouteSectionProps, useLocation, useParams } from '@solidjs/router'
 
-import { getForecast, getPoint } from './lib/nws.ts'
+import { type ForecastResult, getForecast, getPoint, type Point } from './lib/nws.ts'
 
 import LatestObservations from './LatestObservations.tsx'
+import HourlyForecast from './HourlyForecast'
 import ShortForecast from './ShortForecast.tsx'
 import DetailedForecast from './DetailedForecaset.tsx'
 import ForecastPlaceholder from './ForecastPlaceholder.tsx'
 import HomeButton from './HomeButton.tsx'
 import LatestObservationsPlaceholder from './LatestObservationsPlaceholder.tsx'
 import SunRiseSet from './SunRiseSet.tsx'
+import { getMinMaxTemp } from './lib/util'
 
 export interface ForecastProps {
     point?: {
@@ -19,9 +21,34 @@ export interface ForecastProps {
 }
 
 const getData = query(async (lat, lon) => {
-    const point = await getPoint(lat, lon)
-    const forecast = await getForecast(point.properties.forecast)
-    return { point, forecast }
+    const point: Point = await getPoint(lat, lon)
+    const forecast: ForecastResult = await getForecast(point.properties.forecast)
+    const hourlyForecastResult: ForecastResult = await getForecast(point.properties.forecastHourly)
+
+    const date = new Date()
+    const currentDate = date.getDate()
+    const currentHour = date.getHours()
+    const timeRegex = /(\d+):(\d+)\s(AM|PM)/
+
+    const periods = hourlyForecastResult.properties.periods
+        .filter((p) => {
+            const startTime = new Date(p.startTime)
+            return (
+                (startTime.getDate() === currentDate && startTime.getHours() >= currentHour) ||
+                startTime.getDate() === currentDate + 1
+            )
+        })
+        .filter((_, i) => i < 12)
+        .map((p) => {
+            const d = new Date(p.startTime)
+            const timeString = d.toLocaleTimeString('en-US', { hour12: true, timeStyle: 'short' })
+            const match = timeString.match(timeRegex)
+            p.hourString = `${match![1]} ${match![3]}`
+            return { ...p, hourString: `${match![1]} ${match![3]}` }
+        })
+    const [minTemp, maxTemp] = getMinMaxTemp([...periods])
+    const hourlyForecast = { minTemp, maxTemp, periods }
+    return { point, forecast, hourlyForecast }
 }, 'forecast')
 
 export default function Forecast(props: ForecastProps | RouteSectionProps) {
@@ -50,6 +77,7 @@ export default function Forecast(props: ForecastProps | RouteSectionProps) {
             <SunRiseSet lat={lat} lon={lon} />
             <Suspense fallback={<ForecastPlaceholder />}>
                 <Show when={data()}>
+                    <HourlyForecast hourlyForecast={data()!.hourlyForecast} />
                     <ShortForecast forecastResult={data()!.forecast} />
                     <DetailedForecast forecastResult={data()!.forecast} />
                 </Show>
