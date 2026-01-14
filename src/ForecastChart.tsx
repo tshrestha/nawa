@@ -206,19 +206,18 @@ export default function ForecastChart({
             .enter()
             .append('g')
             .attr('class', 'forecast-label')
-            .attr('transform', (d) => `translate(4, ${yScale(d.index) ?? 0})`)
+            .attr('transform', (d) => `translate(0, ${yScale(d.index) ?? 0})`)
 
         const forecastLabelBg = forecastLabelGroup
             .append('rect')
             .attr('height', 20)
             .attr('width', 40)
-            .attr('rx', 4)
             .attr('fill', 'rgba(255, 255, 255, 0.2)')
 
         const forecastLabelText = forecastLabelGroup
             .append('text')
             .attr('class', 'forecast-label')
-            .attr('dx', '0.5em')
+            .attr('dx', '0.4em')
             .attr('dy', '1.0em')
             .attr('text-anchor', 'start')
             .attr('font-size', '12px')
