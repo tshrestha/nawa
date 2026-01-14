@@ -1,6 +1,7 @@
-import type { Period } from './lib/nws.ts'
 import { onCleanup, onMount } from 'solid-js'
 import { area, curveCatmullRom, line, scaleLinear, scalePoint, select } from 'd3'
+
+import type { Period } from './lib/nws.ts'
 
 export interface ForecastChartProps {
     title: string
@@ -22,7 +23,6 @@ export default function ForecastChart({
     periods,
     getX,
     getXLabel,
-    // getY,
     getForecastLabel
 }: ForecastChartProps) {
     let containerRef!: HTMLDivElement
