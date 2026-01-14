@@ -200,20 +200,36 @@ export default function ForecastChart({
             .map((d, i) => ({ ...d, index: i }))
             .filter((d, i) => i === 0 || getForecastLabel(d) !== getForecastLabel(periods[i - 1]))
 
-        svg.selectAll('.forecast-label')
+        const forecastLabelGroup = svg
+            .selectAll('.forecast-label')
             .data(forecastLabels)
             .enter()
+            .append('g')
+            .attr('class', 'forecast-label')
+            .attr('transform', (d) => `translate(4, ${yScale(d.index) ?? 0})`)
+
+        const forecastLabelBg = forecastLabelGroup
+            .append('rect')
+            .attr('height', 20)
+            .attr('width', 40)
+            .attr('rx', 4)
+            .attr('fill', 'rgba(255, 255, 255, 0.2)')
+
+        const forecastLabelText = forecastLabelGroup
             .append('text')
             .attr('class', 'forecast-label')
-            .attr('x', 4)
-            .attr('y', (d) => yScale(d.index) ?? 0)
-            .attr('dy', '1.2em')
+            .attr('dx', '0.5em')
+            .attr('dy', '1.0em')
             .attr('text-anchor', 'start')
-            .attr('font-size', '14px')
-            .attr('font-weight', 'bold')
+            .attr('font-size', '12px')
             .attr('fill', 'black')
-            .attr('filter', 'url(#text-shadow)')
             .text((d) => getForecastLabel(d))
+
+        const forecastLabelWidths = forecastLabelText.nodes().map((el) => [el.scrollHeight, el.scrollWidth])
+
+        forecastLabelBg
+            .attr('height', (_, i) => forecastLabelWidths[i][0])
+            .attr('width', (_, i) => forecastLabelWidths[i][1] + 10)
 
         // Add axis lines connecting time labels to data point circles
         svg.selectAll('.axis-line')
@@ -250,7 +266,7 @@ export default function ForecastChart({
     return (
         <div class={'card rounded-4 mb-2'}>
             <div class={'card-header'}>{title}</div>
-            <div class={'card-body bg-body rounded-bottom-4'}>
+            <div class={'card-body bg-body-secondary rounded-bottom-4'}>
                 <div ref={containerRef} class={`w-100 ${classList?.join(' ')}`}></div>
             </div>
         </div>
