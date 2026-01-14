@@ -83,7 +83,7 @@ export default function Forecast(props: ForecastProps | RouteSectionProps) {
                 </Show>
             </Suspense>
             <Show when={location.pathname !== '/'}>
-                <div class={'position-fixed bottom-0 pb-4'}>
+                <div class={'position-fixed bottom-0 pb-4 z-3'}>
                     <HomeButton />
                 </div>
             </Show>
