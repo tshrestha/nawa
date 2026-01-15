@@ -128,23 +128,6 @@ export default function ForecastChart({
         // Create defs for gradients and filters
         const defs = svg.append('defs')
 
-        // Add drop shadow filter for text
-        const filter = defs
-            .append('filter')
-            .attr('id', 'text-shadow')
-            .attr('x', '-20%')
-            .attr('y', '-20%')
-            .attr('width', '140%')
-            .attr('height', '140%')
-
-        filter
-            .append('feDropShadow')
-            .attr('dx', '0')
-            .attr('dy', '0')
-            .attr('stdDeviation', '2')
-            .attr('flood-color', 'white')
-            .attr('flood-opacity', '0.8')
-
         // Create vertical gradient based on data point at each point
         const gradient = defs
             .append('linearGradient')
