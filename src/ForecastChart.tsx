@@ -249,7 +249,7 @@ export default function ForecastChart({
         <div class={'card rounded-4 mb-2'}>
             <div class={'card-header'}>{title}</div>
             <div class={'card-body rounded-bottom-4'}>
-                <div ref={containerRef} class='w-100'></div>
+                <div ref={containerRef} class='w-100 forecast-chart'></div>
             </div>
         </div>
     )
