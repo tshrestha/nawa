@@ -35,17 +35,18 @@ export default function HourlyWindChart({ hourlyForecast }: { hourlyForecast: Ho
             title={'HOURLY WIND'}
             colorDomain={[0, 10, 20, 30, 40, 50, 60, 70, 80, 90]}
             colorRange={[
-                'rgba(247,251,255, 0.6)',
-                'rgba(222,235,247, 0.6)',
-                'rgba(198,219,239, 0.6)',
-                'rgba(253,208,162, 0.6)',
-                'rgba(253,174,107, 0.6)',
-                'rgba(253,141,60, 0.6)',
-                'rgba(203,24,29, 0.6)',
-                'rgba(165,15,21, 0.6)',
-                'rgba(103,0,13, 0.6)',
-                'rgba(73,0,106, 0.6)'
+                '#6b8e6b', // 0 mph - sage green (calm)
+                '#5a9178', // 10 mph
+                '#4a9485', // 20 mph
+                '#d4a843', // 30 mph - golden (moderate)
+                '#d4883a', // 40 mph
+                '#d46832', // 50 mph - orange (strong)
+                '#c94a2a', // 60 mph
+                '#b33025', // 70 mph - red (severe)
+                '#8b1a1a', // 80 mph
+                '#5c1a5c', // 90+ mph - deep purple (extreme)
             ]}
+            classList={['condies-bg-light-sage']}
             periods={hourlyForecast.periods}
             getX={(p: Period) => parseWindSpeed(p.windSpeed)}
             getXLabel={(p: Period) => p.windSpeed}

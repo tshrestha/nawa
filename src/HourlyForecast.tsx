@@ -39,7 +39,7 @@ export default function HourlyForecast({ hourlyForecast }: { hourlyForecast: Hou
                     <HourlyWindChart hourlyForecast={hourlyForecast} />
                 </Match>
             </Switch>
-            <div class='btn-group mb-4' role='group' aria-label='Forecast type selector'>
+            <div class='btn-group mt-1 mb-4 bg-body' role='group' aria-label='Forecast type selector'>
                 <For each={forecastType()}>
                     {(type) => (
                         <>

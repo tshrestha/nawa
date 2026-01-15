@@ -1,5 +1,5 @@
 import { onCleanup, onMount } from 'solid-js'
-import { area, curveCatmullRom, line, scaleLinear, scalePoint, select } from 'd3'
+import { area, curveLinear, line, scaleLinear, scalePoint, select } from 'd3'
 
 import type { Period } from './lib/nws.ts'
 
@@ -17,7 +17,6 @@ export interface ForecastChartProps {
 
 export default function ForecastChart({
     title,
-    classList,
     colorDomain,
     colorRange,
     periods,
@@ -110,7 +109,8 @@ export default function ForecastChart({
                     maxTimeLabelWidth -
                     timeLabelPadding -
                     dataPointLabelPadding -
-                    maxDataPointLabelWidth
+                    maxDataPointLabelWidth -
+                    dataPointCircleRadius
             ])
 
         svg.selectAll('text.x-label')
@@ -123,7 +123,7 @@ export default function ForecastChart({
             .x0(xScale(relativeMinX))
             .x1((d) => xScale(getX(d)))
             .y((_, i) => yScale(i) ?? 0)
-            .curve(curveCatmullRom.alpha(0.5))
+            .curve(curveLinear)
 
         // Create defs for gradients and filters
         const defs = svg.append('defs')
@@ -169,7 +169,7 @@ export default function ForecastChart({
         const lineGenerator = line<Period>()
             .x((d) => xScale(getX(d)))
             .y((_, i) => yScale(i) ?? 0)
-            .curve(curveCatmullRom.alpha(0.5))
+            .curve(curveLinear)
 
         // Create gradient for the line stroke
         const lineGradient = defs
@@ -212,15 +212,15 @@ export default function ForecastChart({
             .append('rect')
             .attr('height', 20)
             .attr('width', 40)
-            .attr('fill', 'rgba(255, 255, 255, 0.2)')
+            .attr('fill', 'rgba(255, 255, 255, 0.3)')
 
         const forecastLabelText = forecastLabelGroup
             .append('text')
             .attr('class', 'forecast-label')
-            .attr('dx', '0.4em')
+            .attr('dx', '0.3em')
             .attr('dy', '1.0em')
             .attr('text-anchor', 'start')
-            .attr('font-size', '12px')
+            .attr('font-size', '0.8rem')
             .attr('fill', 'black')
             .text((d) => getForecastLabel(d))
 
@@ -265,8 +265,8 @@ export default function ForecastChart({
     return (
         <div class={'card rounded-4 mb-2'}>
             <div class={'card-header'}>{title}</div>
-            <div class={'card-body bg-body-secondary rounded-bottom-4'}>
-                <div ref={containerRef} class={`w-100 ${classList?.join(' ')}`}></div>
+            <div class={'card-body rounded-bottom-4'}>
+                <div ref={containerRef} class='w-100'></div>
             </div>
         </div>
     )

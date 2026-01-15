@@ -149,7 +149,12 @@ export async function getLatestObservations(stationID: string) {
 }
 
 export async function getForecast(forecastURL: string) {
-    const response = await fetch(forecastURL, { headers })
+    const response = await fetch(`${forecastURL}?units=us`, {
+        headers: {
+            ...headers
+            // 'Feature-Flags': 'forecast_temperature_qv,forecast_wind_speed_qv'
+        }
+    })
     if (!response.ok) {
         console.error('failed to get forecast')
         return null
