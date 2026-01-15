@@ -17,7 +17,7 @@ export default function HourlyPrecipChart({ hourlyForecast }: { hourlyForecast: 
                 '#1e4d88', // 70%
                 '#1e3a6e', // 80%
                 '#1a2f5a', // 90%
-                '#172554', // 100% - deep navy
+                '#172554' // 100% - deep navy
             ]}
             periods={hourlyForecast.periods}
             getX={(p: Period) => p.probabilityOfPrecipitation.value}

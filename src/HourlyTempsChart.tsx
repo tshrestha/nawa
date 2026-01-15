@@ -17,7 +17,7 @@ export default function HourlyTempsChart({ hourlyForecast }: { hourlyForecast: H
                 '#eab308', // 70°F - yellow (warm)
                 '#f97316', // 80°F - orange (hot)
                 '#ef4444', // 90°F - red
-                '#b91c1c', // 100°F - deep red (extreme heat)
+                '#b91c1c' // 100°F - deep red (extreme heat)
             ]}
             periods={hourlyForecast.periods}
             getX={(p: Period) => p.temperature}

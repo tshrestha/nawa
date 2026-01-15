@@ -44,7 +44,7 @@ export default function HourlyWindChart({ hourlyForecast }: { hourlyForecast: Ho
                 '#c94a2a', // 60 mph
                 '#b33025', // 70 mph - red (severe)
                 '#8b1a1a', // 80 mph
-                '#5c1a5c', // 90+ mph - deep purple (extreme)
+                '#5c1a5c' // 90+ mph - deep purple (extreme)
             ]}
             classList={['condies-bg-light-sage']}
             periods={hourlyForecast.periods}
