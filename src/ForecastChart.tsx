@@ -147,7 +147,11 @@ export default function ForecastChart({
         })
 
         // Draw the area
-        svg.append('path').datum(periods).attr('fill', 'url(#temp-gradient)').attr('d', areaGenerator)
+        svg.append('path')
+            .datum(periods)
+            .attr('fill', 'url(#temp-gradient)')
+            .attr('fill-opacity', 0.4)
+            .attr('d', areaGenerator)
 
         const lineGenerator = line<Period>()
             .x((d) => xScale(getX(d)))
@@ -175,7 +179,7 @@ export default function ForecastChart({
             .datum(periods)
             .attr('fill', 'none')
             .attr('stroke', 'url(#line-gradient)')
-            .attr('stroke-width', 2)
+            .attr('stroke-width', 4)
             .attr('d', lineGenerator)
 
         // Add short forecast description (only when different from previous hour)
